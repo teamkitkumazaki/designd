@@ -4,7 +4,14 @@
  *
  * @package DESIGN:D
  */
-get_header(); ?>
+get_header();
+
+/* 「More Dialogue」ボタンの data-taxonomy / data-term 用。
+   このアーカイブは絞り込み無しの一覧のため常に空文字。
+   未定義のままだとPHPの警告文がページに出力されてしまうため必ず定義する。 */
+$filter_taxonomy = '';
+$filter_term     = '';
+?>
 
 <section id="dialogue-archive" class="dflt maincontents anim-trigger">
 	<div class="section_inner two-column">
