@@ -36,7 +36,7 @@
 		     style.css は WordPress テーマ情報(Theme Name等)保持用として
 		     残しているのみで、フロント表示には読み込んでいない。 -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
-		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/css/app.min.css?date=20260904">
+		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/css/app.min.css?date=20260904b">
 <?php wp_head(); ?>
 
 <?php
