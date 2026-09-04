@@ -127,21 +127,21 @@ if ( is_home() || is_front_page() ) {
   $site_image = "";
 
 ?>
-<title><?php echo $site_title; ?></title>
+<!-- 表示速度改善(第三段階・PJAX対応): data-pjax-meta を付けたタグは
+     assets/js/pjax.js がページ遷移後に新しいページの内容へ差し替える対象です。 -->
+<title data-pjax-meta="title"><?php echo $site_title; ?></title>
 <?php if(strstr($url,'/selectbox') || strstr($url,'/subsingle') || strstr($url,'/subset') || strstr($url,'/subcustom')):?>
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="robots" content="noindex,nofollow" data-pjax-meta="robots" />
 <?php endif;?>
-<meta property="og:title" content="<?php echo $site_title; ?>">
-<meta property="og:type" content="article">
-<meta property="og:url" content="<?php echo $site_permalink; ?>">
-<meta property="og:image" content="<?php echo $thumnail; ?>">
-<meta name="description" content="<?php echo $description; ?>">
+<meta property="og:title" content="<?php echo $site_title; ?>" data-pjax-meta="og:title">
+<meta property="og:type" content="article" data-pjax-meta="og:type">
+<meta property="og:url" content="<?php echo $site_permalink; ?>" data-pjax-meta="og:url">
+<meta property="og:image" content="<?php echo $thumnail; ?>" data-pjax-meta="og:image">
+<meta name="description" content="<?php echo $description; ?>" data-pjax-meta="description">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="<?php echo $site_title; ?>">
-<meta property="og:description" content="<?php echo $description; ?>">
+<meta property="og:description" content="<?php echo $description; ?>" data-pjax-meta="og:description">
 <meta property="og:site_name" content="デザインで株式会社">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:description" content="<?php echo $description; ?>">
-<meta name="twitter:title" content="<?php echo $site_title; ?>">
-<meta name="twitter:image" content="<?php echo $thumnail; ?>">
+<meta name="twitter:description" content="<?php echo $description; ?>" data-pjax-meta="twitter:description">
+<meta name="twitter:title" content="<?php echo $site_title; ?>" data-pjax-meta="twitter:title">
+<meta name="twitter:image" content="<?php echo $thumnail; ?>" data-pjax-meta="twitter:image">

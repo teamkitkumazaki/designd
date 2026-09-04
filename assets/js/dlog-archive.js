@@ -117,7 +117,11 @@ $(function(){
 	// --------------------------------------------------
 	// 年フィルタークリック
 	// --------------------------------------------------
-	$(document).on('click', '.filter-link', function (e) {
+	// 表示速度改善(第三段階・PJAX対応): document へのデリゲートイベントは
+	// PJAXでこのスクリプトが再読込されるたびに再バインドされてしまうため、
+	// 同じ名前空間のイベントを先に外してから登録し、多重発火を防ぐ。
+	$(document).off('click.dlogArchive');
+	$(document).on('click.dlogArchive', '.filter-link', function (e) {
 		e.preventDefault();
 
 		var $this = $(this);
@@ -146,7 +150,7 @@ $(function(){
 	// --------------------------------------------------
 	// More ボタンクリック
 	// --------------------------------------------------
-	$(document).on('click', '.more_btn[data-paged] a', function (e) {
+	$(document).on('click.dlogArchive', '.more_btn[data-paged] a', function (e) {
 		e.preventDefault();
 		var year  = $moreBtn.data('year') || '';
 		var paged = parseInt($moreBtn.data('paged')) + 1;
@@ -156,9 +160,19 @@ $(function(){
 	// --------------------------------------------------
 	// ブラウザ 戻る / 進む
 	// --------------------------------------------------
-	window.addEventListener('popstate', function (e) {
+	// 表示速度改善(第三段階・PJAX対応):
+	// このスクリプトは pjax.js によってPJAX遷移ごとに再読込されるため、
+	// popstateリスナーが多重登録されないよう、前回登録分を必ず解除してから登録する。
+	// また pjax.js が発行する pushState (state.pjax === true) は
+	// ページ遷移そのものであり、このアーカイブ内フィルターの状態ではないため無視する。
+	if (window.__dlogArchivePopstateHandler) {
+		window.removeEventListener('popstate', window.__dlogArchivePopstateHandler);
+	}
+	window.__dlogArchivePopstateHandler = function (e) {
 		var state = e.state || {};
-		var year  = state.year || '';
+		if (state.pjax) return; // PJAXによるページ遷移なので何もしない
+
+		var year = state.year || '';
 
 		$('.filter-link').removeClass('active');
 		if (year) {
@@ -168,7 +182,22 @@ $(function(){
 		}
 
 		fetchDlog(year, 1, 'replace');
-	});
+	};
+	window.addEventListener('popstate', window.__dlogArchivePopstateHandler);
+
+	// --------------------------------------------------
+	// pjax.js からの離脱時クリーンアップ登録
+	// --------------------------------------------------
+	// 表示速度改善(第三段階・PJAX対応): 他ページへPJAX遷移した後もこの
+	// popstateリスナーが残ってエラーになることを防ぐため、pjax.js が
+	// 次の専用JSを読み込む直前に呼び出すクリーンアップ関数を登録しておく。
+	window.__pjaxPageCleanup = function () {
+		if (window.__dlogArchivePopstateHandler) {
+			window.removeEventListener('popstate', window.__dlogArchivePopstateHandler);
+			window.__dlogArchivePopstateHandler = null;
+		}
+		$(document).off('click.dlogArchive');
+	};
 
 	// --------------------------------------------------
 	// 初期ロード時の history state を設定
@@ -176,7 +205,10 @@ $(function(){
 	(function () {
 		var params = new URLSearchParams(window.location.search);
 		var year   = params.has('dlog_year') ? params.get('dlog_year') : '';
-		history.replaceState({ year: year }, '', window.location.href);
+		// 表示速度改善(第三段階・PJAX対応): pjax.js が付与した state.pjax
+		// フラグを消してしまわないよう、既存のstateをベースにマージする。
+		var mergedState = Object.assign({}, history.state, { year: year });
+		history.replaceState(mergedState, '', window.location.href);
 	})();
 
 });

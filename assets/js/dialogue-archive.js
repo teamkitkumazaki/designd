@@ -72,11 +72,20 @@ $(function(){
 		return Promise.all(promises.length ? promises : [Promise.resolve()]);
 	}
 
-	$(document).on('click', '.more_btn[data-paged] a', function (e) {
+	// 表示速度改善(第三段階・PJAX対応): document へのデリゲートイベントは
+	// PJAXでこのスクリプトが再読込されるたびに再バインドされてしまうため、
+	// 同じ名前空間のイベントを先に外してから登録する。
+	$(document).off('click.dialogueArchive');
+	$(document).on('click.dialogueArchive', '.more_btn[data-paged] a', function (e) {
 		e.preventDefault();
 		var paged = parseInt($moreBtn.data('paged')) + 1;
 		fetchDialogue(paged);
 	});
+
+	// pjax.js からの離脱時クリーンアップ登録
+	window.__pjaxPageCleanup = function () {
+		$(document).off('click.dialogueArchive');
+	};
 
 });
 
