@@ -109,6 +109,21 @@ if ( is_home() || is_front_page() ) {
     $description = "企業やサービスの課題解決を軸に、ディレクション・制作を行うデザインエージェンシー。伴走型のブランディングプロジェクトでブランディングや経営課題など上流の課題に対しても広義のデザインで向き合います。";
   }
 
+  /* is_tax() / is_search() / is_category() / is_tag() / is_archive() など、
+     上記の分岐で $thumnail が設定されないケースのフォールバック。
+     未定義変数のままだとPHPの警告文がページに出力されてしまうため必ず定義する。 */
+  if (empty($thumnail)) {
+    $thumnail = get_template_directory_uri().'/assets/img/ogp/ogp2.jpg';
+  }
+
+  if (empty($site_title)) {
+    $site_title = 'デザインで株式会社';
+  }
+
+  if (empty($site_permalink)) {
+    $site_permalink = home_url( '/' );
+  }
+
   $site_image = "";
 
 ?>
