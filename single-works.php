@@ -39,7 +39,7 @@ get_header(); ?>
 					<?php endif; ?>
 				</div>
 				<div class="thumnail_wrap anim-trigger-fade">
-					<img loading="lazy" class="portrait" src="<?= $image ?>" srcset="<?= $image ?> 1440w, <?= $image_sp ?> 768w, <?= $image ?> 2048w">
+					<img loading="lazy" decoding="async" class="portrait" src="<?= $image ?>" srcset="<?= $image ?> 1440w, <?= $image_sp ?> 768w, <?= $image ?> 2048w">
 				</div>
 			</div>
 
@@ -89,12 +89,13 @@ get_header(); ?>
 											<?= $img_large[0] ?> <?= $img_large[1] ?>w,
 											<?= $img_full[0] ?> <?= $img_full[1] ?>w"
 									sizes="(max-width: 768px) 100vw, 50vw"
+									decoding="async"
 								>
 							</div>
 							<?php endif; ?>
 							<?php if ($d['article_image_src']):?>
 								<?php $article_img_src =  str_replace("/cms/", "/", $d['article_image_src']);?>
-								<img src="<?= $article_img_src; ?>" class="anim-trigger-fade" loading="lazy">
+								<img src="<?= $article_img_src; ?>" class="anim-trigger-fade" loading="lazy" decoding="async">
 							<?php endif; ?>
 						</div>
 				<?php endforeach; ?>

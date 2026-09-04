@@ -40,7 +40,7 @@ if (!$valid_dialogue) return;
 						<a href="<?= get_permalink($post_id_item); ?>" class="anim-trigger animsition-link cursor-trigger">
 							<dl class="animsition-link imgOnly">
 								<dt>
-									<figure class="thumbnail"><img loading="lazy" class="portrait" src="<?= $image_sp ?>"></figure>
+									<figure class="thumbnail"><img loading="lazy" decoding="async" class="portrait" src="<?= $image_sp ?>"></figure>
 								</dt>
 								<dd>
 									<h3 class="title font-sub"><?= $page_ttl; ?></h3>

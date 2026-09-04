@@ -97,7 +97,7 @@ get_header(); ?>
 
 						 <div class="dlog_item" style="width: 50%; margin-bottom: 50px;">
 							<a style="font-size: 16px;" href="<?php the_permalink(); ?>">
-								<span style="display: block;" class="img_wrap"><img loading="lazy" src="<?= esc_url($image) ?>" alt="<?= esc_attr($page_ttl) ?>" style="width: 100%;"></span>
+								<span style="display: block;" class="img_wrap"><img loading="lazy" decoding="async" src="<?= esc_url($image) ?>" alt="<?= esc_attr($page_ttl) ?>" style="width: 100%;"></span>
 								<span class="ttl_wrap" style="display: block;"><?= $page_ttl; ?></span>
 								<span class=""><?= $date; ?></span>
 							</a>

@@ -17,7 +17,7 @@ $date = get_the_date('Y.m.d');
 	<dl class="imgOnly">
 		<dt>
 			<figure class="thumbnail">
-				<img loading="lazy" src="<?php echo esc_url($image); ?>" alt="">
+				<img loading="lazy" decoding="async" src="<?php echo esc_url($image); ?>" alt="">
 			</figure>
 		</dt>
 		<dd>

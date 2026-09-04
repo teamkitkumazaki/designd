@@ -49,9 +49,12 @@ Version: 1.0.0
 
 @font-face {
     font-family: 'IPAexGothic';
-    src:url('./assets/font/ipaexg.ttf') format('truetype'), 
-        url('./assets/font/ipaexg.woff2') format('woff2'),
-        url('./assets/font/ipaexg.woff') format('woff');
+    /* 表示速度改善: 使用頻度の高い常用漢字・かな・記号等に絞ったサブセット版に変更。
+       また、ブラウザが最初に対応形式を採用する仕様に合わせて
+       軽量なwoff2を最優先、次点woff、最後にttfの順に修正(以前はttfが先頭で非効率だった)。 */
+    src: url('./assets/font/ipaexg.woff2') format('woff2'),
+         url('./assets/font/ipaexg.woff') format('woff'),
+         url('./assets/font/ipaexg.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

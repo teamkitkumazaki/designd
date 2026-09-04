@@ -20,13 +20,19 @@
 		get_template_part( 'template-parts/head' );
 	?>
 
-	<!-- FAVICON -->
-	<link href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/favicon.ico" rel="shortcut icon">
-	<meta property="og:image" content="https://designd.jp/wp-content/themes/designd/assets/images/ogp.png">
-	<!-- CSS -->
-	<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/vendor/animsition/css/animsition.min.css">
-	<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/vendor/modaal/css/modaal.min.css">
-	<link rel="stylesheet" href="<?php bloginfo( 'stylesheet_url' ); ?>?date=20240801">
+		<!-- FAVICON -->
+		<link href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/favicon.ico" rel="shortcut icon">
+		<meta property="og:image" content="https://designd.jp/wp-content/themes/designd/assets/images/ogp.png">
+		<!-- PRECONNECT: 外部ドメインへの接続を事前に確立し、初回リクエストの待ち時間を短縮 -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="preconnect" href="https://www.googletagmanager.com">
+		<!-- PRELOAD: 本文で広く使用する日本語サブセットフォントを優先的に読み込み、文字のちらつき(FOUT)を軽減 -->
+		<link rel="preload" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/font/ipaexg.woff2" as="font" type="font/woff2" crossorigin>
+		<!-- CSS -->
+		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/vendor/animsition/css/animsition.min.css">
+		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/vendor/modaal/css/modaal.min.css">
+		<link rel="stylesheet" href="<?php bloginfo( 'stylesheet_url' ); ?>?date=20240801">
 <?php wp_head(); ?>
 
 <?php
@@ -44,7 +50,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="header" role="banner">
 	<div class="header__container">
 
-		<h1 class="header__brand"><a href="<?php echo esc_url( home_url() ); ?>/" class="animsition-link" data-animsition-out-class="fade-out-up-sm"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo.svg" alt="<?php bloginfo( 'name' ); ?>"></a></h1>
+		<h1 class="header__brand"><a href="<?php echo esc_url( home_url() ); ?>/" class="animsition-link" data-animsition-out-class="fade-out-up-sm"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo.svg" alt="<?php bloginfo( 'name' ); ?>" decoding="async"></a></h1>
 
 		<?php
 		/* カスタムテンプレート「navigation.php」をインクルードします。 */

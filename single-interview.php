@@ -52,9 +52,9 @@ get_header(); ?>
 				</div>
 				<div class="contents_block">
 					<?php if ($main_visual):?>
-						<img loading="lazy" class="portrait" src="<?= $main_visual_url[0];?>" srcset="<?= $main_visual_url[0]; ?> 1440w, <?= $main_visual_url_sp[0]; ?> 768w, <?= $main_visual_url[0]; ?> 2048w">
+						<img loading="lazy" decoding="async" class="portrait" src="<?= $main_visual_url[0];?>" srcset="<?= $main_visual_url[0]; ?> 1440w, <?= $main_visual_url_sp[0]; ?> 768w, <?= $main_visual_url[0]; ?> 2048w">
 					<?php else: ?>
-						<img loading="lazy" class="portrait" src="<?= $image ?>" srcset="<?= $image ?> 1440w, <?= $image_sp ?> 768w, <?= $image ?> 2048w">
+						<img loading="lazy" decoding="async" class="portrait" src="<?= $image ?>" srcset="<?= $image ?> 1440w, <?= $image_sp ?> 768w, <?= $image ?> 2048w">
 					<?php endif; ?>
 					<?php if ($main_caption):?>
 						<p class="caption"><?= $main_caption;?></p>
@@ -97,6 +97,7 @@ get_header(); ?>
 									<img
 										src="<?= wp_get_attachment_image_src($d['article_img'], 'full')[0] ?>"
 										srcset="<?= wp_get_attachment_image_src($d['article_img'], 'medium_large')[0] ?> 1440w, <?= wp_get_attachment_image_src($d['article_img'], 'medium_large')[0] ?> 768w, <?= wp_get_attachment_image_src($d['article_img'], 'full')[0] ?> 2048w"
+										decoding="async"
 									>
 									<?php if ($d['article_img_caption']):?>
 									<p class="caption anim-trigger-fade"><?= $d['article_img_caption'];?>
@@ -147,7 +148,7 @@ get_header(); ?>
 					<a href="<?= get_permalink($next_id); ?>" class="anim-trigger animsition-link cursor-trigger">
 						<dl class="animsition-link imgOnly">
 							<dt>
-								<figure class="thumbnail"><img loading="lazy" class="portrait" src="<?= esc_url($next_img_sp); ?>"></figure>
+								<figure class="thumbnail"><img loading="lazy" decoding="async" class="portrait" src="<?= esc_url($next_img_sp); ?>"></figure>
 							</dt>
 							<dd>
 								<h3 class="title font-sub"><?= esc_html($next_ttl); ?></h3>
@@ -201,7 +202,7 @@ get_header(); ?>
 										$alternative_image_url = wp_get_attachment_image_src($alternative_image_id, 'medium_large')[0];
 								?>
 									<figure class="alternative_image">
-										<img src="<?= esc_url($alternative_image_url); ?>" alt="" loading="lazy">
+										<img src="<?= esc_url($alternative_image_url); ?>" alt="" loading="lazy" decoding="async">
 									</figure>
 								<?php endif; endif; ?>
 
@@ -209,7 +210,7 @@ get_header(); ?>
 									if (has_post_thumbnail()) {
 										the_post_thumbnail('medium_large', array('loading' => 'lazy'));
 									} else {
-										echo '<img src="' . esc_url(get_template_directory_uri()) . '/assets/images/alternative_image.jpg" alt="" loading="lazy">';
+										echo '<img src="' . esc_url(get_template_directory_uri()) . '/assets/images/alternative_image.jpg" alt="" loading="lazy" decoding="async">';
 									}
 								?></figure>
 							</dt>

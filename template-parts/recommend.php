@@ -49,7 +49,7 @@
 					$alternative_image_url = $alternative_image[0];
 ?>
 						<figure class="alternative_image">
-							<img src="<?php echo $alternative_image_url; ?>" alt="">
+							<img src="<?php echo $alternative_image_url; ?>" alt="" decoding="async">
 						</figure>
 <?php
 				}
@@ -60,7 +60,7 @@
 	if ( has_post_thumbnail() ) {
 		the_post_thumbnail( 'large' );
 	} else {
-		echo '<img src="' . esc_url( get_template_directory_uri() ) . '/assets/images/alternative_image.jpg" alt="">';
+		echo '<img src="' . esc_url( get_template_directory_uri() ) . '/assets/images/alternative_image.jpg" alt="" decoding="async">';
 	}
 ?></figure>
 				</a></li>

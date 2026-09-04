@@ -14,7 +14,7 @@ get_header(); ?>
 						<span>
 							<picture>
 								<source media="(max-width: 960px)" srcset="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy01-sp.svg">
-								<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy01-pc.svg" alt="デザインで、超えていく。">
+								<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy01-pc.svg" alt="デザインで、超えていく。" decoding="async">
 							</picture>
 						</span>
 					</span>
@@ -22,7 +22,7 @@ get_header(); ?>
 						<span>
 							<picture>
 								<source media="(max-width: 960px)" srcset="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy02-sp.svg">
-								<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy02-pc.svg" alt="デザインで、世界を動かす。">
+								<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy02-pc.svg" alt="デザインで、世界を動かす。" decoding="async">
 							</picture>
 						</span>
 					</span>
@@ -30,7 +30,7 @@ get_header(); ?>
 						<span>
 							<picture>
 								<source media="(max-width: 960px)" srcset="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy03-sp.svg">
-								<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy03-pc.svg" alt="デザインで、未来をつくる。">
+								<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/top_kv_copy03-pc.svg" alt="デザインで、未来をつくる。" decoding="async">
 							</picture>
 						</span>
 					</span>
@@ -82,7 +82,7 @@ get_header(); ?>
 					if ( has_post_thumbnail() ) {
 						the_post_thumbnail( 'large', array( 'loading' => 'lazy' ) );
 					} else {
-						echo '<img src="' . esc_url( get_template_directory_uri() ) . '/assets/images/alternative_image.jpg" alt="" loading="lazy">';
+						echo '<img src="' . esc_url( get_template_directory_uri() ) . '/assets/images/alternative_image.jpg" alt="" loading="lazy" decoding="async">';
 					}
 				?></figure>
 						</dt>
@@ -165,7 +165,7 @@ get_header(); ?>
 									$alternative_image_url = $alternative_image[0];
 				?>
 										<figure class="alternative_image">
-											<img src="<?php echo $alternative_image_url; ?>" alt="" loading="lazy">
+											<img src="<?php echo $alternative_image_url; ?>" alt="" loading="lazy" decoding="async">
 										</figure>
 				<?php
 								}
@@ -176,7 +176,7 @@ get_header(); ?>
 					if ( has_post_thumbnail() ) {
 						the_post_thumbnail( 'large', array( 'loading' => 'lazy' ) );
 					} else {
-						echo '<img src="' . esc_url( get_template_directory_uri() ) . '/assets/images/alternative_image.jpg" alt="" loading="lazy">';
+						echo '<img src="' . esc_url( get_template_directory_uri() ) . '/assets/images/alternative_image.jpg" alt="" loading="lazy" decoding="async">';
 					}
 				?></figure>
 									</dt>

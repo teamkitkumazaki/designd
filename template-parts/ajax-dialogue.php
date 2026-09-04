@@ -16,9 +16,9 @@ $date             = get_the_date('Y.m.d');
 		<dt>
 			<figure class="thumbnail">
 				<?php if ($image_sp) : ?>
-					<img loading="lazy" class="portrait" src="<?php echo esc_url($image_sp); ?>" alt="">
+					<img loading="lazy" decoding="async" class="portrait" src="<?php echo esc_url($image_sp); ?>" alt="">
 				<?php else : ?>
-					<img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/alternative_image.jpg" alt="" loading="lazy">
+					<img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/alternative_image.jpg" alt="" loading="lazy" decoding="async">
 				<?php endif; ?>
 			</figure>
 		</dt>

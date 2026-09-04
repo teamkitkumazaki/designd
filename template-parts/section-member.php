@@ -36,7 +36,7 @@ $staff_partner = SCF::get('staff_partner', $post_id);
 					<?php if ($profile_img01_url):?>
 					<li class="member_item">
 						<div class="img_item">
-							<img loading="lazy" class="portrait" src="<?= $profile_img01_url[0] ?>">
+							<img loading="lazy" decoding="async" class="portrait" src="<?= $profile_img01_url[0] ?>">
 						</div>
 						<div class="member_detail">
 							<?php if ($name_en):?><p class="name_en name font-en"><?= $name_en;?></p><?php endif; ?>
