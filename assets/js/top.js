@@ -3,19 +3,19 @@ referrer = document.referrer;
 
 let openingFlg = true;
 
-$(function(){
-	var elm = $('#js-opening');
-	elm.hide();
+document.addEventListener('DOMContentLoaded', function () {
+	var elm = document.getElementById('js-opening');
+	if (elm) elm.style.display = 'none';
 
-	if(-1 !== referrer.indexOf(URL)) {
+	if (-1 !== referrer.indexOf(URL)) {
 		openingFlg = false;
 	} else {
-		$('body').addClass( 'is-fix' );
-		elm.show();
+		document.body.classList.add('is-fix');
+		if (elm) elm.style.display = '';
 		setTimeout(function() {
-			elm.addClass( 'is-end' );
+			if (elm) elm.classList.add('is-end');
 			setTimeout(function() {
-				$('body').removeClass( 'is-fix' );
+				document.body.classList.remove('is-fix');
 				openingFlg = false;
 				opening(200);
 			}, 500);
@@ -25,8 +25,10 @@ $(function(){
 
 function opening( sec ) {
 	setTimeout(function(){
-		$('.introduction__copy-jp').removeClass('init');
-		$('.introduction__bg').removeClass('init');
+		var copyJp = document.querySelector('.introduction__copy-jp');
+		var introBg = document.querySelector('.introduction__bg');
+		if (copyJp) copyJp.classList.remove('init');
+		if (introBg) introBg.classList.remove('init');
 	},sec);
 }
 
@@ -34,7 +36,7 @@ function cmnOpenHandler(){
 	if(!openingFlg) opening(100)
 }
 
-$(window).on('load', function () {
+document.addEventListener('DOMContentLoaded', function () {
 	// ピン留めセクションの初期bottom位置を記録
 	document.querySelectorAll('.top-dialogue, .top-archives').forEach(section => {
 		section.dataset.naturalBottom = section.offsetTop + section.offsetHeight;
@@ -64,7 +66,7 @@ function cmnResizeHandler(){
 
 
 function cmnScrollHandler(){
-	const scrpx = $(window).scrollTop();
+	const scrpx = window.pageYOffset || document.documentElement.scrollTop;
 	const innerH = window.innerHeight;
 
 	// Introduction parallax
