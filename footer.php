@@ -73,7 +73,7 @@
 		</div>
 	</footer>
 
-</div>
+</main>
 <div class="cursor_tip">
 	<p class="tip"></p>
 	<div class="hover_cursor">

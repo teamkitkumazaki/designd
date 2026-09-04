@@ -70,4 +70,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	</div>
 </header>
-<div class="animsition">
+<!-- 表示速度改善(第三段階): ここから footer.php の </main> までが PJAX で
+     差し替えられる「ページ本体」の共有Wrapperです。ヘッダー・フッターは
+     ページ遷移時に再読込・再描画されません。assets/js/pjax.js を参照。 -->
+<main id="pjax-content" class="animsition">
