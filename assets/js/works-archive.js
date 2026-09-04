@@ -136,11 +136,7 @@ $(function(){
 	// --------------------------------------------------
 	// フィルタークリック
 	// --------------------------------------------------
-	// 表示速度改善(第三段階・PJAX対応): document へのデリゲートイベントは
-	// PJAXでこのスクリプトが再読込されるたびに再バインドされてしまうため、
-	// 同じ名前空間のイベントを先に外してから登録し、多重発火を防ぐ。
-	$(document).off('click.worksArchive');
-	$(document).on('click.worksArchive', '.filter-link', function (e) {
+	$(document).on('click', '.filter-link', function (e) {
 		e.preventDefault();
 
 		var $this    = $(this);
@@ -185,7 +181,7 @@ $(function(){
 	// --------------------------------------------------
 	// More ボタンクリック
 	// --------------------------------------------------
-	$(document).on('click.worksArchive', '.more_btn[data-paged] a', function (e) {
+	$(document).on('click', '.more_btn[data-paged] a', function (e) {
 		e.preventDefault();
 
 		var taxonomy = $moreBtn.data('taxonomy') || '';
@@ -198,18 +194,8 @@ $(function(){
 	// --------------------------------------------------
 	// ブラウザ 戻る / 進む
 	// --------------------------------------------------
-	// 表示速度改善(第三段階・PJAX対応):
-	// このスクリプトは pjax.js によってPJAX遷移ごとに再読込されるため、
-	// popstateリスナーが多重登録されないよう、前回登録分を必ず解除してから登録する。
-	// また pjax.js が発行する pushState (state.pjax === true) は
-	// ページ遷移そのものであり、このアーカイブ内フィルターの状態ではないため無視する。
-	if (window.__worksArchivePopstateHandler) {
-		window.removeEventListener('popstate', window.__worksArchivePopstateHandler);
-	}
-	window.__worksArchivePopstateHandler = function (e) {
-		var state = e.state || {};
-		if (state.pjax) return; // PJAXによるページ遷移なので何もしない
-
+	window.addEventListener('popstate', function (e) {
+		var state    = e.state || {};
 		var taxonomy = state.taxonomy || '';
 		var term     = state.term     || '';
 
@@ -221,22 +207,7 @@ $(function(){
 		}
 
 		fetchWorks(taxonomy, term, 1, 'replace');
-	};
-	window.addEventListener('popstate', window.__worksArchivePopstateHandler);
-
-	// --------------------------------------------------
-	// pjax.js からの離脱時クリーンアップ登録
-	// --------------------------------------------------
-	// 表示速度改善(第三段階・PJAX対応): 他ページへPJAX遷移した後もこの
-	// popstateリスナーが残ってエラーになることを防ぐため、pjax.js が
-	// 次の専用JSを読み込む直前に呼び出すクリーンアップ関数を登録しておく。
-	window.__pjaxPageCleanup = function () {
-		if (window.__worksArchivePopstateHandler) {
-			window.removeEventListener('popstate', window.__worksArchivePopstateHandler);
-			window.__worksArchivePopstateHandler = null;
-		}
-		$(document).off('click.worksArchive');
-	};
+	});
 
 	// --------------------------------------------------
 	// 初期ロード時の history state を設定
@@ -254,10 +225,7 @@ $(function(){
 			term     = params.get('client-category');
 		}
 
-		// 表示速度改善(第三段階・PJAX対応): pjax.js が付与した state.pjax
-		// フラグを消してしまわないよう、既存のstateをベースにマージする。
-		var mergedState = Object.assign({}, history.state, { taxonomy: taxonomy, term: term });
-		history.replaceState(mergedState, '', window.location.href);
+		history.replaceState({ taxonomy: taxonomy, term: term }, '', window.location.href);
 	})();
 
 });

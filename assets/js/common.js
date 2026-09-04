@@ -164,35 +164,47 @@ $(function(){
 		return false;
 	});
 
-	/* 初回表示時のフェードイン演出
-	================================================
-	表示速度改善(第三段階): ページ遷移そのものは assets/js/pjax.js が
-	#pjax-content の差し替えとして行うようになったため、
-	ここでは「サーバーから届いた最初のページ」が表示される際の
-	フェードイン演出のみを、以前 animsition.js が使っていたのと同じ
-	CSSクラス（fade-in）を使って再現します。
-	（ページ遷移時のフェードアウト/フェードインは pjax.js 側で管理） */
-	(function () {
-		var contentEl = document.getElementById('pjax-content');
-		if (!contentEl) return;
+	/* animsition
+	================================================*/
+	$(".animsition").animsition({
+		inClass : 'fade-in', // ロード時のエフェクト
+		outClass : 'fade-out-up-sm', // 離脱時のエフェクト
+		inDuration : 1500, // ロード時の演出時間
+		outDuration : 800, // 離脱時の演出時間
+		linkElement : '.animsition-link', //アニメーションを行う要素
+		// e.g. linkElement : 'a:not([target="_blank"]):not([href^=#])'
+		loading : true, //ローディングの有効/無効
+		loadingParentElement : 'body', //ローディング要素のラッパー
+		loadingClass : 'animsition-loading', //ローディングのクラス
+		unSupportCss : [ 'animation-duration',
+						'-webkit-animation-duration',
+						'-o-animation-duration'],
+		overlay : false, //オーバーレイの有効/無効
+		overlayClass : 'animsition-overlay-slide', //オーバーレイのクラス
+		overlayParentElement : 'body' //オーバーレイ要素のラッパー
+	})
+		.one('animsition.inStart',function(){
+			//console.log('event -> inStart');
+	})
+		.one('animsition.inEnd',function(){
+			//console.log('event -> inEnd');
+	});
 
-		contentEl.style.animationDuration = '1500ms';
-		contentEl.classList.add('fade-in');
-
-		var done = false;
-		function onAnimEnd() {
-			if (done) return;
-			done = true;
-			contentEl.removeEventListener('animationend', onAnimEnd);
-			contentEl.removeEventListener('webkitAnimationEnd', onAnimEnd);
-			contentEl.classList.remove('fade-in');
-			if (typeof cmnOpenHandler == 'function') cmnOpenHandler();
-			scrollEventHandler();
-		}
-		contentEl.addEventListener('animationend', onAnimEnd);
-		contentEl.addEventListener('webkitAnimationEnd', onAnimEnd);
-		setTimeout(onAnimEnd, 1500 + 300);
-	})();
+	$('.animsition').on('animsition.outStart', function(){
+		// console.log('outStart');
+		$('.cover').addClass('is-end');
+	});
+	$('.animsition').on('animsition.outEnd', function(){
+		// console.log('outEnd');
+	});
+	$('.animsition').on('animsition.inStart', function(){
+		// console.log('inStart');
+		if (typeof cmnOpenHandler == 'function') cmnOpenHandler();
+		scrollEventHandler();
+	});
+	$('.animsition').on('animsition.inEnd', function(){
+		// console.log('inEnd');
+	});
 
 
 	$('.fadein').on('inview', function(event, isInView){

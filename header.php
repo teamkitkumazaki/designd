@@ -70,14 +70,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	</div>
 </header>
-<!-- 表示速度改善(第三段階): ここから footer.php の </main> までが PJAX で
-     差し替えられる「ページ本体」の共有Wrapperです。ヘッダー・フッターは
-     ページ遷移時に再読込・再描画されません。assets/js/pjax.js を参照。
-     data-page-script / data-page-config は、このページに対応する専用JS
-     ファイル名とそのconfigをPJAX遷移後に再読込・再実行するための情報です。
-     (functions.php の designd_get_pjax_page_meta() で判定) -->
-<?php $pjax_page_meta = designd_get_pjax_page_meta(); ?>
-<main id="pjax-content" class="animsition"
-	data-page-script="<?php echo esc_attr( $pjax_page_meta['script'] ); ?>"
-	data-page-config-var="<?php echo esc_attr( $pjax_page_meta['config_var'] ?? '' ); ?>"
-	data-page-config="<?php echo esc_attr( $pjax_page_meta['config'] ? wp_json_encode( $pjax_page_meta['config'] ) : '' ); ?>">
+<div class="animsition">
