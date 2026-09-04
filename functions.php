@@ -366,12 +366,6 @@ function disable_author_archive() {
 add_action('init', 'disable_author_archive');
 
 
-?>ect( home_url() );
-		exit;
-	}
-}
-add_action('init', 'disable_author_archive');
-
 //カスタム投稿タイプの追加
 add_action( 'init', 'create_post_type' );
 function create_post_type() {
