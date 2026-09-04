@@ -1,0 +1,44 @@
+name: Deploy to Xserver
+
+# main ブランチが更新された(=プルリクエストがマージされた等)タイミングで、
+# エックスサーバー上のWordPressテーマフォルダへ自動的にファイルをアップロードします。
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}   # GitHubの「Actions」タブから手動実行することも可能
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: エックスサーバーへFTPSアップロード
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.XSERVER_FTP_SERVER }}
+          username: ${{ secrets.XSERVER_FTP_USERNAME }}
+          password: ${{ secrets.XSERVER_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          # サーバー側のアップロード先(テーマフォルダ)。
+          # 例: /designd.jp/public_html/wp-content/themes/designd2/
+          server-dir: ${{ secrets.XSERVER_SERVER_DIR }}
+          local-dir: ./
+          # 開発用・バックアップ用のファイルは本番サーバーへアップロードしない
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/.DS_Store
+            **/node_modules/**
+            **/*-bk.php
+            **/*-bk_*.php
+            **/*_bk.php
+            **/*.php_org
+            **/header (*).php
+            **/single-interview (*).php
+            **/single-works (*).php
+          dangerous-clean-slate: false
