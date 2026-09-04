@@ -1,0 +1,196 @@
+@use "setting" as *;
+
+// =============================================
+// Contact
+// =============================================
+#mw_wp_form_mw-wp-form-16{
+  padding-top: 1.5rem;
+
+  @include mx-desktop-s{
+    padding-top: 1vw;
+  }
+
+  h3{
+    margin-bottom: 3rem;
+  }
+}
+
+.c-form {
+  &__block {
+    margin-bottom: 4.0rem;
+
+    @include mx-desktop-s{
+      margin-bottom: 3.0rem;
+    }
+
+  }
+
+  legend {
+    display: block;
+    width: 100%;
+    margin: 0 0 1.2rem;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: $color-gray-mid;
+
+    @include mx-desktop-s{
+      font-size: 1.2rem;
+    }
+  }
+
+  &__require {
+    color: $color-red;
+    font-size: 90%;
+    display: inline-block;
+    margin: 0 1em 0 0;
+  }
+
+  // Text inputs
+  $text-inputs: 'input[type="email"]', 'input[type="number"]', 'input[type="password"]',
+                'input[type="search"]', 'input[type="tel"]', 'input[type="text"]', 'input[type="url"]';
+
+  #{$text-inputs} {
+    max-width: 81.0rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: transparent;
+    color: $color-gray-dark;
+    font-size: 1.4rem;
+    line-height: 120%;
+    border: 1px solid $color-gray-mid;
+    border-radius: 0px;
+
+  }
+
+  textarea {
+    width: 100%;
+    height: 24.0rem;
+    padding: 1rem;
+    color: $color-gray-dark;
+    background-color: transparent;
+    font-size: 1.4rem;
+    line-height: 200%;
+    letter-spacing: 0.025em;
+    border: 1px solid $color-gray-mid;
+    border-radius: 0px;
+    resize: vertical;
+  }
+
+  // Focus states
+  #{$text-inputs},
+  textarea {
+    &:focus {
+      background-color: $color-white;
+    }
+  }
+
+  &__agree {
+    margin: 5rem 0 7.5rem;
+
+    legend {
+      margin-bottom: 2.0rem;
+      font-size: 1.4rem;
+      font-weight: 300;
+      line-height: 140%;
+    }
+
+    a { 
+      text-decoration: underline; 
+      &:hover { text-decoration: none; }
+    }
+
+    p {
+      font-size: 1.4rem;
+      font-weight: 300;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+    @include mx-desktop-s{
+      margin: 4rem 0 6.7rem;
+      legend,p{
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  &__submit {
+    margin: 0;
+  }
+
+  button[type="submit"],
+  input[type="submit"] {
+    max-width: 25.7rem;
+    width: 100%;
+    padding: 1.5rem;
+    background-color: $color-black;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.25s ease;
+    border: none;
+    border-radius: 50px;
+    display: block;
+
+    &:hover {
+      background-color: #555;
+    }
+
+    @include mx-desktop-s{
+      max-width: 30rem;
+      margin: 0 auto;
+      font-size: 1.4rem;
+      padding: 1.2rem;
+    }
+    &[name="submitBack"]{
+      opacity:.5;
+    }
+  }
+
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: 0;
+    border-radius: 0;
+    -webkit-transition: all 0.25s linear 0s;
+    transition: all 0.25s linear 0s;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin: 0 0.25em 0 0;
+    background-color: $color-white;
+    color: $color-gray-mid;
+    border: 1px solid $color-gray-mid;
+    vertical-align: middle;;
+
+    &:checked {
+      border-color: $color-black;
+      background: $color-black;
+      -webkit-box-shadow: 0 0 0 2px #fff inset;
+      box-shadow: 0 0 0 2px #fff inset;
+
+      & + .mwform-checkbox-field-text {
+        color: $color-black;
+      }
+    }
+  }
+
+  .mwform-checkbox-field-text {
+    color: $color-gray-mid;
+    transition: color 0.25s linear;
+    vertical-align: middle;
+  }
+}
+
+.mwform-checkbox-field-text::after {
+  vertical-align: middle;
+}
+
+.mw_wp_form .error{
+  display: inline-block;
+  color: $color-red;
+}

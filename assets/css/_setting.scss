@@ -1,0 +1,275 @@
+// ==========================================================================
+//    projectSettings[vars]
+// ==========================================================================
+
+$easeInSine:     cubic-bezier(0.47,  0,     0.745, 0.715);
+$easeOutSine:    cubic-bezier(0.39,  0.575, 0.565, 1    );
+$easeInOutSine:  cubic-bezier(0.445, 0.05,  0.55,  0.95 );
+$easeInQuad:     cubic-bezier(0.55,  0.085, 0.68,  0.53 );
+$easeOutQuad:    cubic-bezier(0.25,  0.46,  0.45,  0.94 );
+$easeInOutQuad:  cubic-bezier(0.455, 0.03,  0.515, 0.955);
+
+$easeInCubic:    cubic-bezier(0.55,  0.055, 0.675, 0.19 );
+$easeOutCubic:   cubic-bezier(0.215, 0.61,  0.355, 1    );
+$easeInOutCubic: cubic-bezier(0.645, 0.045, 0.355, 1    );
+$easeInQuart:    cubic-bezier(0.895, 0.03,  0.685, 0.22 );
+$easeOutQuart:   cubic-bezier(0.165, 0.84,  0.44,  1    );
+$easeInOutQuart: cubic-bezier(0.77,  0,     0.175, 1    );
+
+$easeInQuint:    cubic-bezier(0.755, 0.05,  0.855, 0.06 );
+$easeOutQuint:   cubic-bezier(0.23,  1,     0.32,  1    );
+$easeInOutQuint: cubic-bezier(0.86,  0,     0.07,  1    );
+$easeInExpo:     cubic-bezier(0.95,  0.05,  0.795, 0.035);
+$easeOutExpo:    cubic-bezier(0.19,  1,     0.22,  1    );
+$easeInOutExpo:  cubic-bezier(1,     0,     0,     1    );
+
+$easeInCirc:     cubic-bezier(0.6,   0.04,  0.98,  0.335);
+$easeOutCirc:    cubic-bezier(0.075, 0.82,  0.165, 1    );
+$easeInOutCirc:  cubic-bezier(0.785, 0.135, 0.15,  0.86 );
+$easeInBack:     cubic-bezier(0.6,  -0.28,  0.735, 0.045);
+$easeOutBack:    cubic-bezier(0.175, 0.885, 0.32,  1.275);
+$easeInOutBack:  cubic-bezier(0.68, -0.55,  0.265, 1.55 );
+
+//-----------------------------------------------
+
+$prefixList: -webkit-, -moz-, -ms-, -o-, null;
+
+//使い方
+//@each $prefix in $prefixList{
+//	#{$prefix}transform:translate(-50%,-50%);
+//}
+
+//-----------------------------------------------
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+//使い方
+// @include keyframes(example) {
+//   100% {
+//       opacity: 1;
+//   }
+// }
+
+//-----------------------------------------------
+
+@mixin animationValue( $name, $duration, $easing, $delay, $count, $state){
+    -webkit-animation: $name $duration+s $easing $delay+s $count $state;
+    animation: $name $duration+s $easing $delay+s $count $state;
+}
+
+//使い方
+//@include animationValue(
+//     $name - アニメーション名,
+//     $duration - スピード,
+//     $easing - イージング,
+//     $delay - 遅延,
+//     $count - 繰り返し,(Ex:infinite or 1)
+//     $state - 終了時の状態(Ex:forwards)
+// );
+
+//-----------------------------------------------
+
+$org-ease-out:cubic-bezier(.3,.9,.61,1.01);
+$org-ease-in-out:cubic-bezier(.32,.28,.35,1);
+$org-ease-out-back:cubic-bezier(0.175, 0.885, 0.320, 1.275);
+
+
+//antialiased,subpixel-antialiased,none
+$font-smoothing: antialiased;
+
+//auto,optimizeSpeed,optimizeLegibility,geometricPrecision
+$text-rendering: auto;
+
+// =============================================
+// Variables
+// =============================================
+// Colors
+$color-black: #000000;
+$color-white: #ffffff;
+$color-bg: #fff;
+$color-gray-light: #d3d3d4;
+$color-gray-mid: #9fa0a0;
+$color-gray-dark: #323232;
+$color-gray-text: rgba(0, 0, 0, 0.5);
+$color-gray-text-light: rgba(0, 0, 0, 0.4);
+$color-red: #e50012;
+$color-link-blue: #17489a;
+
+// Breakpoints
+$bp-tablet: 768px;
+$bp-desktop-s: 960px;
+$bp-desktop: 1024px;
+$bp-wide: 1400px;
+$bp-max: 1440px;
+
+// Font family
+
+$font-family-base: "Noto Sans JP", "Helvetica Neue", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+$font-family-sub: 'IPAexGothic', sans-serif;
+$font-family-en: "CircularXX","Noto Sans JP", "Helvetica Neue", sans-serif;
+//300 → CircularXXSub-Light
+//400 → CircularXXSub-Book
+//700 → CircularXXSub-Bold
+
+// Max widths
+$max-width: 124.0rem;
+$max-width-wide: 152.0rem;
+$max-width-business: 126.0rem;
+
+// Spacing
+$padding-sp: 4.8vw;
+$padding-pc: 10.0rem;
+
+// =============================================
+// Mixins
+// =============================================
+
+@mixin tablet {
+  @media screen and (min-width: #{$bp-tablet}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: #{$bp-desktop}) {
+    @content;
+  }
+}
+
+@mixin desktop-s {
+  @media screen and (min-width: #{$bp-desktop-s}) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @media screen and (min-width: #{$bp-wide}) {
+    @content;
+  }
+}
+
+@mixin max {
+  @media screen and (min-width: #{$bp-max}) {
+    @content;
+  }
+}
+
+@mixin container {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+//-----
+
+@mixin mx-tablet {
+  @media screen and (max-width: #{$bp-tablet}) {
+    @content;
+  }
+}
+
+@mixin mx-desktop {
+  @media screen and (max-width: #{$bp-desktop}) {
+    @content;
+  }
+}
+
+@mixin mx-desktop-s {
+  @media screen and (max-width: #{$bp-desktop-s}) {
+    @content;
+  }
+}
+
+//------
+//Gray Filter
+//-----------------
+
+@mixin filter-gray-dk{
+  filter: brightness(0.63) saturate(0);
+}
+@mixin filter-black{
+  filter: brightness(0) saturate(0);
+}
+
+
+
+// =============================================
+// Separator utility (hr)
+// =============================================
+
+@mixin separator-classes($selector) {
+  @for $i from 1 through 20 {
+    #{$selector} hr.separator#{$i * 10} {
+      padding-top: #{$i}rem;
+    }
+  }
+}
+
+// /* 汎用mixin
+
+@include keyframes(titleUp){
+	0%{
+		transform:translateY(120px);
+		opacity: 0;
+	}
+	100%{
+		transform:translateY(0);
+		opacity: 1;
+	}
+}
+
+// /* 汎用Transition
+@mixin photo_transition(){
+  transition: all .8s ease;
+}
+
+@mixin hover_transition(){
+  transition: all .2s linear;
+}
+@mixin hover_fade(){
+  transition: all .2s linear;
+  &.hover{
+    opacity: .7;
+  }
+}
+
+//clamp計算
+@function getClamp($vw-rate) {
+  $max-size: 580;
+  // $min: 360 * $rate * 1px;
+  $min: 0px;
+  $mid: $vw-rate * 1vw;
+  $max: $max-size * $vw-rate * 0.01px;
+  @return clamp($min, $mid, $max);
+}
+@function getClampFont($vw-rate) {
+  $max-size: 750;
+  // $min: 360 * $rate * 1px;
+  $min: 0px;
+  $mid: $vw-rate * 1vw;
+  $max: $max-size * $vw-rate * 0.01px;
+  @return clamp($min, $mid, $max);
+}
+@function getClampPC($vw-rate) {
+  $max-size: 1240;
+  // $min: 360 * $rate * 1px;
+  $min: 0px;
+  $mid: $vw-rate * 1vw;
+  $max: $max-size * $vw-rate * 0.01px;
+  @return clamp($min, $mid, $max);
+}
+
+@keyframes hoverArrow {
+  0% { clip-path: inset(0 0 0 0); }
+  100%   { clip-path: inset(0 0 0 100%); }
+}
+@keyframes returnArrow {
+  0% { clip-path: inset(0 100% 0 0); }
+  100%   { clip-path: inset(0 0 0 0); }
+}

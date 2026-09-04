@@ -1,0 +1,1006 @@
+/*
+ * Structur v0.5.0.0
+ * https://structur.work/
+ * Licensed under the MIT license.
+ * Copyright 2020 Shunji Tabata
+ */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/* Document
+   ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+html {
+  line-height: 1.15;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */ }
+
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers.
+ */
+body {
+  margin: 0; }
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+  display: block; }
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */ }
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */ }
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+  background-color: transparent; }
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none;
+  /* 1 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */ }
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder; }
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */ }
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+  font-size: 80%; }
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sub {
+  bottom: -0.25em; }
+
+sup {
+  top: -0.5em; }
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+  border-style: none; }
+
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */ }
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input {
+  /* 1 */
+  overflow: visible; }
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select {
+  /* 1 */
+  text-transform: none; }
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; }
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0; }
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText; }
+
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+  padding: 0.35em 0.75em 0.625em; }
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+  box-sizing: border-box;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
+  /* 1 */
+  padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */ }
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  vertical-align: baseline; }
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+  overflow: auto; }
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */ }
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */ }
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+  display: block; }
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item; }
+
+/* Misc
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10+.
+ */
+template {
+  display: none; }
+
+/**
+ * Add the correct display in IE 10.
+ */
+[hidden] {
+  display: none; }
+
+/* ===============================================
+ * Utilities Classes
+=============================================== */
+/* Clearfix Classes
+----------------------------------------------- */
+.cf::after,
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both; }
+
+/* Float Classes
+----------------------------------------------- */
+.float-right {
+  float: right !important; }
+
+.float-left {
+  float: left !important; }
+
+/* Visibility Classes
+----------------------------------------------- */
+.show {
+  display: block !important; }
+
+.hide {
+  display: none !important; }
+
+.visible {
+  visibility: visible; }
+
+.invisible,
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+/* ! Break(carriage return) Control Classes
+----------------------------------------------- */
+/* br.sp {
+  display: block !important; }
+  @media screen and (min-width: 768px) {
+    br.sp {
+      display: none !important; } }
+
+br.pc {
+  display: none !important; }
+  @media screen and (min-width: 768px) {
+    br.pc {
+      display: block !important; } } */
+
+/* ! inline Break(carriage return) Control Classes
+----------------------------------------------- */
+/* br.sp-inline {
+  display: inline-block !important; }
+  @media screen and (min-width: 768px) {
+    br.sp-inline {
+      display: none !important; } }
+
+br.pc-inline {
+  display: none !important; }
+  @media screen and (min-width: 768px) {
+    br.pc-inline {
+      display: inline-block !important; } } */
+
+/* ! Responsive Image Classes
+----------------------------------------------- */
+.rsp-img {
+  display: block;
+  max-width: 100%;
+  height: auto; }
+
+/* ===============================================
+ * Base Classes
+=============================================== */
+/* set default font size 10px
+----------------------------------------------- */
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%; }
+
+body {
+  margin: 0;
+  color: #333333;
+  font-size: 1rem;
+  line-height: 1; }
+
+input,
+button,
+select,
+textarea {
+  font-size: inherit;
+  line-height: inherit;
+  font-family: inherit; }
+
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+[hidden] {
+  display: none !important; }
+
+/* Anchor Color Setting
+----------------------------------------------- */
+a {
+  color: #000;
+  text-decoration: none; }
+  a :hover {
+    color: #000;
+    text-decoration: underline; }
+  a :visited {
+    color: #000; }
+  a :active {
+    color: #000; }
+
+/* ===============================================
+ * Container Classes
+=============================================== */
+.st-container {
+  padding: 0 2.0rem;
+  margin-right: auto;
+  margin-left: auto; }
+  @media screen and (min-width: 768px) {
+    .st-container {
+      width: 760px;
+      padding: 0; } }
+  @media screen and (min-width: 1024px) {
+    .st-container {
+      width: 1000px; } }
+  @media screen and (min-width: 1280px) {
+    .st-container {
+      width: 1200px; } }
+  .st-container::after {
+    content: "";
+    display: block;
+    clear: both; }
+
+/* ===============================================
+ * Typography Classes
+=============================================== */
+/* Headings
+----------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 1em;
+  font-weight: bold;
+  line-height: 1.4; }
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+  font-size: 0.65rem;
+  line-height: 1; }
+
+h1 {
+  font-size: 4rem; }
+
+h2 {
+  font-size: 3.6rem; }
+
+h3 {
+  font-size: 3.2rem; }
+
+h4 {
+  font-size: 2.4rem; }
+
+h5 {
+  font-size: 2rem; }
+
+h6 {
+  font-size: 1.6rem; }
+
+/* ! Paragraph
+----------------------------------------------- */
+p {
+  margin: 0 0 1em;
+  font-size: 1.6rem;
+  line-height: 1.6; }
+
+/* ! Text Alignment Classes
+----------------------------------------------- */
+.text-left {
+  text-align: left; }
+
+.text-right {
+  text-align: right; }
+
+.text-center {
+  text-align: center; }
+
+.text-justify {
+  text-align: justify; }
+
+.text-nowrap {
+  white-space: nowrap; }
+
+/* ! Font Style Classes
+----------------------------------------------- */
+.text-normal {
+  font-style: normal; }
+
+.text-italic {
+  font-style: italic; }
+
+.text-oblique {
+  font-style: oblique; }
+
+.text-strong {
+  font-weight: bold; }
+
+.text-nowrap {
+  white-space: nowrap; }
+
+/* ! Text Transform Classes
+----------------------------------------------- */
+.text-lowercase {
+  text-transform: lowercase; }
+
+.text-uppercase {
+  text-transform: uppercase; }
+
+.text-capitalize {
+  text-transform: capitalize; }
+
+/* Blockquote
+----------------------------------------------- */
+blockquote {
+  margin: 0 0 1em;
+  padding: 1.0rem 2.0rem;
+  font-size: 1.6rem;
+  font-style: italic;
+  line-height: 1.6;
+  border: 1px solid BORDER_COLOR; }
+
+blockquote p,
+blockquote ul,
+blockquote ol {
+  margin-bottom: 0; }
+
+/* ! Ordered & Unordered List
+----------------------------------------------- */
+ul,
+ol {
+  margin: 0 0 1em 0;
+  padding: 0 0 0 3.0rem; }
+
+ul ul,
+ol ul,
+ul ol,
+ol ol {
+  margin-bottom: 0;
+  padding-top: 1em; }
+
+li {
+  margin-bottom: 1em;
+  font-size: 1.6rem;
+  line-height: 1.6; }
+
+/* ! Unstyled List
+----------------------------------------------- */
+ul.list-unstyled {
+  padding-left: 0;
+  list-style: none; }
+
+/* ! Inline List
+----------------------------------------------- */
+ul.list-inline {
+  margin-left: -1em;
+  padding-left: 0;
+  list-style: none; }
+
+.list-inline > li {
+  display: inline-block;
+  padding-right: 1em;
+  padding-left: 1em; }
+
+/* Definition List
+----------------------------------------------- */
+dl {
+  margin-top: 0;
+  margin-bottom: 1em; }
+
+dl:after::after {
+  content: "";
+  display: block;
+  clear: both; }
+
+dt,
+dd {
+  font-size: 1.6rem;
+  line-height: 1.6; }
+
+dt {
+  font-weight: bold; }
+
+dd {
+  margin-left: 1em; }
+
+/* Horizontal Rule
+----------------------------------------------- */
+hr {
+  height: 0;
+  margin: 0 0 4.9rem;
+  padding-top: 5.0rem;
+  border: none;
+  border-bottom: 1px solid #e5e5e5; }
+
+/*invisible line */
+hr.separator {
+  border: none; }
+
+/* ! Inline Code
+----------------------------------------------- */
+code {
+  background-color: #f2f2f2;
+  margin: 0 .25em;
+  padding: 0.1em 0.5em;
+  font-size: 1.5rem;
+  font-family: "Courier New", monospace;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  white-space: nowrap; }
+
+/* ! Preformatted Text
+----------------------------------------------- */
+pre {
+  display: block;
+  background-color: transparent;
+  margin: 0 0 1em;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow: auto; }
+
+pre code {
+  background-color: transparent;
+  margin: 0;
+  padding: 2.0rem !important;
+  font-size: inherit;
+  color: inherit;
+  white-space: pre-wrap; }
+
+/* ===============================================
+ * Button Classes
+=============================================== */
+/* Basic Button
+----------------------------------------------- */
+.st-button {
+  position: relative;
+  display: inline-block;
+  background-image: none;
+  background-color: #e5e5e5;
+  padding: 1.0em 1.5em;
+  color: #333333;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.6rem;
+  line-height: 1.0;
+  border: solid 1px #e5e5e5;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.st-button:hover,
+.st-button:focus {
+  opacity: 0.8;
+  filter: alpha(opacity=80); }
+
+.st-button:focus {
+  outline: 0; }
+
+/* Disabled Button
+----------------------------------------------- */
+.st-button[disabled],
+.st-button-disabled,
+.st-button-disabled:hover,
+.st-button-disabled:focus,
+.st-button-disabled:active {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none; }
+
+/* Variety of colours and style
+----------------------------------------------- */
+/* Primary Color Button */
+.st-button-primary {
+  background-color: #00a0e9;
+  color: #ffffff;
+  border-color: #00a0e9; }
+
+/* Secondary Color Button */
+.st-button-secondary {
+  background-color: #313439;
+  color: #ffffff;
+  border-color: #313439; }
+
+/* Success Color Button */
+.st-button-success {
+  background-color: #1bbc9b;
+  color: #ffffff;
+  border-color: #1bbc9b; }
+
+/* Error Color Button */
+.st-button-error {
+  background-color: #e74c3c;
+  color: #ffffff;
+  border-color: #e74c3c; }
+
+/* Warning Color Button */
+.st-button-warning {
+  background-color: #f1c000;
+  color: #ffffff;
+  border-color: #f1c000; }
+
+/* Bordered Button
+----------------------------------------------- */
+.st-button-bordered {
+  background-color: transparent;
+  border-width: 1px;
+  border-style: solid; }
+
+/* Primary */
+.st-button-bordered.st-button-primary {
+  color: #00a0e9; }
+
+/* Secondary */
+.st-button-bordered.st-button-secondary {
+  color: #313439; }
+
+/* Success */
+.st-button-bordered.st-button-success {
+  color: #1bbc9b; }
+
+/* Error */
+.st-button-bordered.st-button-error {
+  color: #e74c3c; }
+
+/* Warning */
+.st-button-bordered.st-button-warning {
+  color: #f1c000; }
+
+/* Rounded Button
+----------------------------------------------- */
+.st-button-rounded {
+  border-radius: 0.5rem; }
+
+/* Pill Button
+----------------------------------------------- */
+.st-button-pill {
+  border-radius: 2.0em; }
+
+/* ===============================================
+ * Forms Classes
+=============================================== */
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0; }
+
+/* Basic Form Controls
+----------------------------------------------- */
+.st-form input[type="text"],
+.st-form input[type="password"],
+.st-form input[type="email"],
+.st-form input[type="url"],
+.st-form input[type="date"],
+.st-form input[type="month"],
+.st-form input[type="time"],
+.st-form input[type="datetime"],
+.st-form input[type="datetime-local"],
+.st-form input[type="week"],
+.st-form input[type="number"],
+.st-form input[type="search"],
+.st-form input[type="tel"],
+.st-form input[type="color"],
+.st-form select,
+.st-form textarea {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.5em;
+  vertical-align: middle;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.3rem; }
+
+/* Label
+----------------------------------------------- */
+.st-form label {
+  display: inline-block;
+  max-width: 100%;
+  margin: 0 1.0rem 0.5rem 0;
+  font-size: 1.6rem;
+  line-height: 1.6; }
+
+.st-form .checkbox label,
+.st-form .radio label {
+  display: inline-block;
+  margin-right: 1.0rem; }
+
+.st-form .checkbox input[type="checkbox"],
+.st-form .radio input[type="radio"] {
+  margin-right: 0.5rem; }
+
+/* Form Controls Focus
+----------------------------------------------- */
+.st-form input[type="text"]:focus,
+.st-form input[type="password"]:focus,
+.st-form input[type="email"]:focus,
+.st-form input[type="url"]:focus,
+.st-form input[type="date"]:focus,
+.st-form input[type="month"]:focus,
+.st-form input[type="time"]:focus,
+.st-form input[type="datetime"]:focus,
+.st-form input[type="datetime-local"]:focus,
+.st-form input[type="week"]:focus,
+.st-form input[type="number"]:focus,
+.st-form input[type="search"]:focus,
+.st-form input[type="tel"]:focus,
+.st-form input[type="color"]:focus,
+.st-form select:focus,
+.st-form textarea:focus {
+  outline: none;
+  box-shadow: 0px 0px 5px #00a0e9; }
+
+/* Form Controls Disabled
+----------------------------------------------- */
+.st-form input[type="text"][disabled],
+.st-form input[type="password"][disabled],
+.st-form input[type="email"][disabled],
+.st-form input[type="url"][disabled],
+.st-form input[type="date"][disabled],
+.st-form input[type="month"][disabled],
+.st-form input[type="time"][disabled],
+.st-form input[type="datetime"][disabled],
+.st-form input[type="datetime-local"][disabled],
+.st-form input[type="week"][disabled],
+.st-form input[type="number"][disabled],
+.st-form input[type="search"][disabled],
+.st-form input[type="tel"][disabled],
+.st-form input[type="color"][disabled],
+.st-form select[disabled],
+.st-form textarea[disabled] {
+  background-color: #f2f2f2;
+  color: #666;
+  cursor: not-allowed; }
+
+/* Chrome */
+.st-form input::-webkit-input-placeholder,
+.st-form select::-webkit-input-placeholder,
+.st-form textarea::-webkit-input-placeholder {
+  color: #666; }
+
+/* Firefox */
+.st-form input::-moz-placeholder,
+.st-form select::-moz-placeholder,
+.st-form textarea::-moz-placeholder {
+  color: #666; }
+
+/* IE */
+.st-form input:-ms-input-placeholder,
+.st-form select::-ms-input-placeholder,
+.st-form textarea::-ms-input-placeholder {
+  color: #666; }
+
+.st-form input::placeholder,
+.st-form select::placeholder,
+.st-form textarea::placeholder {
+  color: #666; }
+
+/* Funcy Form Controls
+----------------------------------------------- */
+/* Funcy Select Box */
+.st-select {
+  position: relative;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.3rem; }
+
+.st-select::after {
+  display: block;
+  position: absolute;
+  right: 1.5rem;
+  top: 0;
+  content: "\f107";
+  color: #999;
+  font-size: 1.8rem;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  line-height: 3.6rem;
+  pointer-events: none;
+  z-index: 1; }
+
+.st-select select {
+  display: inline-block;
+  background: none;
+  max-width: 100%;
+  width: 100%;
+  padding: 0 0 0 1em;
+  vertical-align: middle;
+  font-size: 1.6rem;
+  line-height: 3.6rem;
+  border: 0;
+  outline: none;
+  -moz-appearance: none;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none; }
+
+.st-select select:focus,
+.st-select option:focus,
+.st-select select::-moz-focus-inner,
+.st-select option::-moz-focus-inner {
+  outline: none;
+  border: none; }
+
+.st-select option {
+  background-color: #fff; }
+
+/* Funcy Checkbox
+----------------------------------------------------------- */
+.st-form .st-checkbox label {
+  display: inline-block;
+  padding-right: 1rem;
+  cursor: pointer; }
+
+.st-form .st-checkbox label input[type="checkbox"] {
+  display: none; }
+
+.st-form .st-checkbox label span {
+  position: relative; }
+
+.st-form .st-checkbox label span:before {
+  position: relative;
+  top: 2px;
+  content: "\f0c8";
+  color: #666;
+  font-size: 1.8rem;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+  margin-right: 1.0rem; }
+
+.st-form .st-checkbox label input[type="checkbox"]:checked + span {
+  color: #00a0e9; }
+
+.st-form .st-checkbox label input[type="checkbox"]:checked + span:before {
+  content: "\f14a";
+  color: #00a0e9;
+  font-size: 1.8rem;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400; }
+
+/* Funcy Radio Button
+----------------------------------------------------------- */
+.st-form .st-radio label {
+  display: inline-block;
+  padding-right: 1em;
+  cursor: pointer; }
+
+.st-form .st-radio label input[type="radio"] {
+  display: none; }
+
+.st-form .st-radio label span {
+  position: relative; }
+
+.st-form .st-radio label span:before {
+  position: relative;
+  top: 2px;
+  content: "\f111";
+  margin-right: 7px;
+  color: #666;
+  font-size: 1.8rem;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400; }
+
+.st-form .st-radio input[type="radio"]:checked + span {
+  color: #00a0e9; }
+
+.st-form .st-radio input[type="radio"]:checked + span:before {
+  content: "\f192";
+  color: #00a0e9;
+  font-size: 1.8rem;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400; }

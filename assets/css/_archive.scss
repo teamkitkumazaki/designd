@@ -1,0 +1,332 @@
+@use "setting" as *;
+
+// =============================================
+// Archives
+// =============================================
+.archives{
+  padding: 10rem 0;
+
+  @include mx-desktop-s{
+    padding: 3vw 0;
+  }
+
+  &__container {
+
+    @include container;
+
+    @include tablet {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    > a {
+      display: block;
+      width: 100%;
+      margin-bottom: 5.0rem;
+      overflow: hidden;
+
+      @include tablet {
+        width: calc((100% - 3.0rem) / 2);
+
+        .section-dialogue &{
+          width: calc((100% - 3.0rem) / 1.5);
+        }
+        
+      }
+
+      //*** Animation
+      transform-origin: center;
+      transition: opacity .2s linear, transform .5s $easeOutCubic; 
+
+      dt{
+        transition: border-radius .5s $easeInSine; 
+      }
+      dd{
+        
+      }
+
+      &:nth-of-type(even){
+        transition-delay: .1s;
+        dt{
+          transition-delay: .1s;
+        }
+        dd{
+          transition-delay: .6s;
+        }
+      }
+
+      &.init{
+        opacity: 0;
+        transform: translateY(100px) scale(.85);
+        dt{
+          border-radius: 100px;
+        }
+        dd{
+          opacity: 0;
+          transform: translateY(20px);
+        }
+      }
+
+      @include desktop-s {
+        dd >*{
+          transition: opacity .2s linear;  
+        }
+        &:hover{
+          .archiveMovie dt .thumbnail { opacity: 0; }
+
+          .imgOnly{
+            dt{
+              border-radius: 20px;
+              transition: border-radius .25s $easeInCubic;
+            }
+          }
+          dd >*{
+            opacity: .5;
+          }
+        }
+      }
+    }
+
+    dl { 
+      margin: 0; 
+    }
+
+    dt {
+      position: relative;
+      padding-top: 56%;
+      overflow: hidden;
+
+      video {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        z-index: 1;
+      }
+
+      .alternative_image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        z-index: 1;
+
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          margin: 0;
+          object-fit: cover;
+        }
+      }
+
+      .thumbnail {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        z-index: 2;
+        transition: opacity 0.5s ease;
+
+        img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          margin: 0;
+          object-fit: cover;
+        }
+      }
+      
+    }
+
+    dd {
+      margin: 0;
+      padding: 1rem 0 2.5rem;
+
+      h3{
+        font-size: 2.2rem;
+        line-height: 140%;
+        font-weight: 400;
+        margin-bottom:.5rem;
+
+        .top-dialogue &,
+        .section-dialogue &,
+        .post-type-archive-interview &{
+          font-size: 1.8rem;
+          margin-bottom: 1.5rem;
+        }
+
+      }
+      p.interviewer{
+        font-size: 1.6rem;
+        margin: 0;
+        line-height: 140%;
+      }
+      p.description{
+        color: #858585;
+        font-size: 1.2rem;
+        line-height: 140%;
+      }
+
+      transition: opacity .4s linear .35s, transform .4s $easeOutCubic .35s; ;
+
+      @include mx-tablet{
+        h3{
+          font-size: getClampFont(5.6);
+          .top-dialogue &,
+          .section-dialogue &{
+            font-size: getClampFont(4.2);
+            margin-bottom: 4vw;
+          }
+        }
+        p.interviewer{
+          font-size: getClampFont(4.2);
+          margin: 0;
+        }
+        p.description{
+          font-size: getClampFont(3.2);
+        }
+      }
+    }
+  }
+
+  .bg_dark &,.dark &{
+    &__container {
+      dd{
+        h3{
+          color: #fff;
+        }
+        p.description{
+          color: #858585;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+
+  &__more {
+    max-width: $max-width;
+    margin: 8.0rem auto 0;
+
+    a {
+      display: block;
+      text-align: center;
+      font-size: 4.3rem;
+      font-weight: 300;
+      transition: letter-spacing 0.5s ease;
+
+      @include tablet {
+        text-align: left;
+        font-size: 5.9rem;
+      }
+
+      &:hover {
+        letter-spacing: 0.1em;
+      }
+    }
+
+    &__arrow {
+      width: 7.8rem;
+      height: auto;
+      vertical-align: top;
+
+      @include tablet {
+        width: 10.4rem;
+      }
+    }
+  }
+}
+
+.pagenation {
+  // display: none;
+}
+
+#infscr-loading {
+  width: 100%;
+  text-align: center;
+}
+
+// =============================================
+// Filter
+// =============================================
+
+// フィルターリンク active 状態
+.filter-link {
+  position: relative;
+  transition: opacity .2s linear;
+  opacity: .55;
+  sup{
+    visibility: hidden;
+    transition: opacity .2s linear;
+    opacity: 0;
+  }
+  &.hover,&.active{
+    opacity: 1;
+    sup{
+      visibility: visible;
+      opacity: 1;
+    }            
+  }
+
+  .dark &{
+    sup{
+      color: #fff;
+    }
+  }
+}
+
+// more_btn 非表示
+.more_btn.is-hidden-btn {
+  display: none !important;
+}
+
+// コンテナ ローディング中（既存アイテムをフェードアウト）
+.archives__container.is-loading {
+  pointer-events: none;
+
+  > a {
+    opacity: 0;
+  }
+}
+
+// ローディング中オーバーレイ（クリック禁止）
+.works-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+
+  &.is-active {
+    display: block;
+  }
+}
+
+// スピナー（fixed でコンテナ高さに依存しない）
+.works-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: works-spin .7s linear infinite;
+  z-index: 100;
+}
+
+@keyframes works-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}

@@ -1,0 +1,553 @@
+@use "setting" as *;
+
+// =============================================
+// Base
+// =============================================
+:root{
+  interpolate-size: allow-keywords;
+}
+body {
+  // user-select: none;
+  // -webkit-user-select: none;
+  // -moz-user-select: none;
+  // -khtml-user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 0 0 1px transparent; /* Windowsでの微調整用 */
+
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: $color-bg;
+  color: $color-black;
+  font-family: $font-family-base;
+
+  &.is-complete {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: auto;
+  }
+
+  &.is-open,&.is-fix{
+    position: fixed;
+    width: 100%;
+  }
+
+  &.home{
+    background-color: #fff;
+  }
+}
+
+.font-en{
+  font-family: $font-family-en;
+}
+.font-sub{
+  transform: rotate(0.01deg);
+  font-family: $font-family-sub;
+  font-weight: 400;
+}
+
+img {
+  pointer-events: none;
+}
+img,video{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+a {
+  &,
+  &:hover,
+  &:hover * {
+    text-decoration: none;
+  }
+
+  &.hover_dflt{
+    transition: opacity .2s linear;
+    &.hover{
+      opacity: .5;
+    }
+  }
+}
+
+section{
+  position: relative;
+  z-index: 1;
+}
+
+h1,h2,h3,h4,h5{
+  font-weight: 400;
+  margin: 0;
+}
+
+ul{
+  list-style: none;
+  margin:0;
+  padding: 0;
+
+  li{
+    margin: 0;
+    padding: 0;
+  }
+}
+
+p{
+  font-size: 1.6rem;
+  line-height: 200%;
+  letter-spacing: 1px;
+
+  @include mx-desktop-s{
+    font-size: getClampFont(3.2);
+  }
+}
+
+.red{
+  color: #ff0000;
+}
+h3{
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 140%;
+  display: block;
+  width: fit-content;
+  overflow: hidden;
+  > span{
+    display: inline-block;
+    transition: transform .25s $easeOutCubic,opacity .25s linear;
+    @for $i from 1 through 50 {
+      &:nth-child(#{$i}) {
+        transition-delay: #{$i * 0.03 + 0.1}s;
+      }
+    }
+  }
+  sup{
+    font-size: 50%;
+    top: -1em;
+  }
+
+  &.white{
+    color: #fff;
+  }
+
+  &::before,&::after{
+    transition: transform .4s $easeOutBack,opacity .4s linear;
+  }
+  &::after{
+    transition-delay: 0.075s;
+  }
+
+  &.init{
+    > span{
+      transition-delay: 0s;
+      transform: translateY(65px);
+      // opacity: 0;
+    }
+    &::before,&::after{
+      transition-delay: 0s;
+      transform: translateY(65px);
+      opacity: 0;
+    }
+  }
+
+  @include mx-desktop-s{
+    margin: 0;
+    font-size: getClampFont(6.4);
+  }
+}
+
+.deco_w-dot{
+  position: relative;
+  padding-left: 4.2rem;
+  &::after,&::before{
+    display: block;
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: .9rem;
+    aspect-ratio: 1 / 1;
+    background-color: #000;
+    border-radius: 50%;
+  }
+  &::after{
+    left: 1.6rem;
+  }
+
+  &.white_dot,&.white,.dark &{
+    &::after,&::before{
+      background-color: #fff;
+    }
+  }
+
+  @include mx-desktop-s{
+    padding-left: 8vw;
+    &::after,&::before{
+      width: 1.3vw;
+    }
+    &::after{
+      left: 2.4vw;
+    }
+  } 
+}
+
+.accordion-target{
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: all .35s $easeOutSine;
+  .accordion-inner{
+    overflow: hidden;
+  }
+  &.isOpen{
+    grid-template-rows: 1fr;
+  }
+}
+
+
+.more_btn {
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 100%;
+  margin-top: 5rem;
+  width: 100%;
+
+  .home &{
+    margin-top: 8rem;
+  }
+
+  sup{
+    font-size: 50%;
+    vertical-align: revert;
+  }
+  a{
+    position: relative;
+    display: block;
+    width: fit-content;
+
+    padding-right: 6rem;
+    &::after{
+      display: block;
+      content: '';
+      width: 5rem;
+      aspect-ratio: 50 / 13;
+      background: url(../images/cursor_arrow.svg) no-repeat;
+      background-size: contain;
+      position: absolute;
+      right: 0; top: 52%;
+      transform: translateY(-50%);
+      @include filter-black;
+      clip-path: inset(0 0 0 0);
+      transition: clip-path .35s $easeOutCubic .4s;
+    }
+
+    &.hover{
+      &::after{
+        transition-delay: 0s;
+        animation: hoverArrow .3s $easeOutCubic forwards;
+      }
+    }
+
+    .dark &,
+    .bg_dark &{
+      color: #fff;
+      &::after{
+        filter: none;
+      }
+    }
+  }
+  &.init{
+    a::after{
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+
+  @include mx-desktop-s{
+    font-size: getClampFont(5.6);
+    margin-top: 8vw;
+
+    .home &{
+      margin-top: 8vw;
+    }
+    sup{
+      font-size: 50%;
+      vertical-align: revert;
+    }
+
+    a{
+      padding-right: 13%;
+      &::after{
+        width: 26%;
+      }
+    }
+  }
+}
+
+
+// =============================================
+// Cursor
+// =============================================
+
+.cursor_tip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  width: 0; left: 0;
+
+  p.tip{
+    position: absolute;
+    left: .2rem;
+    bottom: 0;
+    display: block;
+    padding: .2rem .2rem .3rem;
+    background-color: $color-gray-mid;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 100%;
+    width: fit-content;
+    white-space: nowrap;
+    clip-path: inset(0 100% 0 0);
+    margin: 0;
+    transition: clip-path .2s $easeOutSine;
+    &.view{
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .hover_cursor{
+    position: absolute;
+    top: calc(50% - 4rem);
+    left: calc(50% - 4rem);
+    width: 8rem;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: #fff 1px solid;
+    @include filter-gray-dk;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center;
+    transform: scale(.4);
+    transition: transform .75s $easeOutBack,opacity .2s linear;
+    opacity: 0;
+    
+    span.arrow{
+      display: block;
+      width: 62.5%;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path .2s $easeOutCubic;
+    }
+
+    &.view{
+      opacity: 1;
+      transform: scale(1);
+      span.arrow{
+        clip-path: inset(0 0 0 0);
+        transition-delay: .3s;
+      }
+    }
+  }
+
+  @include mx-tablet {
+    display: none;
+  }
+}
+
+// =============================================
+// Fade effects
+// =============================================
+
+.fadein {
+  opacity: 0;
+  transform: translate(0, 50px);
+  transition-property: opacity, transform;
+  transition-duration: 1.5s;
+  transition-timing-function: ease;
+
+  &.active {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  &.delay05 { transition-delay: 0.5s; }
+  &.delay10 { transition-delay: 1.0s; }
+  &.delay15 { transition-delay: 1.5s; }
+  &.delay20 { transition-delay: 2.0; }
+}
+
+.anim-trigger-fade{
+	transition: transform .65s $easeOutCubic,opacity .65s linear;
+
+	&.init{
+		transform: translateY(50px);
+		opacity: 0;
+    transition: none !important;
+	}
+}
+.anim-trigger *{
+  &.init{
+    transition: none !important;
+  }
+}
+
+// =============================================
+// Cover (for animsition)
+// =============================================
+
+.cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: $color-gray-light;
+  z-index: 9999;
+  transition: height 0.5s ease;
+
+  .is-complete & {
+    transition-duration: 0.3s;
+    height: 0;
+  }
+
+  &.is-end {
+    top: auto;
+    bottom: 0;
+    height: 100vh;
+  }
+}
+
+// =============================================
+// Opening
+// =============================================
+
+.opening {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: $color-white;
+  overflow: hidden;
+  z-index: 10000;
+  transition: height 0.5s ease;
+
+  &.is-end {
+    height: 0;
+  }
+
+  &__logo {
+    position: absolute;
+    bottom: 50%;
+    right: 50%;
+    width: 55%; // updated 2022.05.06
+    opacity: 0;
+    transform: translate(50%, 120%);
+    transition:
+      transform 3s cubic-bezier(0, 0.425, 0.245, 1),
+      opacity 2s cubic-bezier(0, 0.425, 0.245, 1);
+
+    .is-complete & {
+      opacity: 1;
+      transform: translate(50%, 50%);
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+// =============================================
+// Get in touch
+// =============================================
+
+.get-in-touch {
+  position: relative;
+  background-color: $color-white;
+  padding-top: 22.857%;
+  overflow: hidden;
+
+  &__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 $padding-sp;
+    z-index: 2;
+    mix-blend-mode: difference;
+
+    @include tablet {
+      padding: 0 $padding-pc;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: $max-width;
+    margin: 0 auto;
+    mix-blend-mode: difference;
+  }
+}
+
+.get-in-touc__bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  video {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+  }
+}
+
+
+
+//--------------------------------
+//display
+//--------------------------------
+
+.sp,.sp-in,.sp-flex,.tab,.tab-in,.tab-flex{display: none !important;}
+.pc{display: block !important;}
+.pc-in{display: inline-block !important;}
+.pc-flex{display: flex !important;}
+
+@include mx-desktop-s{
+	// .pc,.pc-in,.pc-flex.tab,.sp,.sp-in,.sp-flex{display: none !important;}
+	// .tab{display: block !important;}
+  // .tab-in{display: inline-block !important;}
+  // .tab-flex{display: flex !important;}
+  .pc,.pc-in,.pc-flex{display: none !important;}
+	.sp{display: block !important;}
+	.sp-in{display: inline-block !important;}
+	.sp-flex{display: flex !important;}
+}
+// @include mx-tablet{
+//   .pc,.pc-in,.pc-flex{display: none !important;}
+// 	.sp{display: block !important;}
+// 	.sp-in{display: inline-block !important;}
+// 	.sp-flex{display: flex !important;}
+// }

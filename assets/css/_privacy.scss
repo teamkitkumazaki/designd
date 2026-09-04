@@ -1,0 +1,77 @@
+@use "setting" as *;
+
+
+// Privacy modal
+.modaal-wrapper {
+  overscroll-behavior: contain;
+}
+
+.modaal-close {
+  &:focus,
+  &:hover {
+    &::after,
+    &::before {
+      background-color: $color-black;
+    }
+  }
+}
+
+.privacy__container {
+  h2,h3,h4{
+    font-weight: 500;
+  }
+  h2 {
+    font-size: 1.6rem;
+    text-align: center;
+    border-bottom: 1px solid $color-black;
+    padding-bottom: 10px;
+    margin-bottom: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    margin: 1.5em 0 0.5em;
+  }
+
+  p,
+  li {
+    font-size: 1.2rem;
+  }
+
+  ul {
+    padding-left: 1.5em;
+    list-style: disc;
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+  @include tablet {
+    h2 {
+      font-size: 2rem;
+      padding-bottom: 20px;
+      margin-bottom: 3em;
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      margin: 3em 0 0.75em;
+    }
+
+    p,
+    li {
+      font-size: 1.4rem;
+    }
+
+    ul {
+      padding-left: 2em;
+    }
+  }
+}
+
+@include tablet {
+  .modaal-content-container {
+    padding: 50px;
+  }
+}

@@ -1,0 +1,493 @@
+@use "setting" as *;
+
+#worksDetail,
+#dialogueDetail,
+#dlogDetail
+{
+  .sholder{
+    font-size:1.4rem;
+    color: $color-gray-mid;
+
+    @include mx-desktop-s{
+      font-size: getClampFont(3.2);
+    }
+  }
+
+  .text_block{
+    p{
+      font-size: 1.6rem;
+      line-height: 200%;
+      span.sholder{
+        color: $color-gray-mid;
+        margin-bottom: .5rem;
+        display: inline-block;
+      }
+      @include mx-desktop-s{
+        font-size: getClampFont(3.2);
+        span.sholder{
+          margin-bottom: 0;
+        }
+      }
+    }
+    a:not(.cursor-trigger):not(.hover_dflt){
+      text-decoration: underline;
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+
+  p.caption{
+    display: block;
+    text-align: right;
+    font-size: 1.2rem;
+    color: $color-gray-mid;
+    margin-top:.5rem;
+
+    @include mx-desktop-s{
+      font-size: getClampFont(2);
+    }
+  }
+
+  .sticky_inner{
+    padding-bottom: 26rem;
+
+    @include mx-desktop-s{
+      padding-top: 12vw;
+      padding-bottom: 5vw;
+    }
+  }
+}
+
+.txt-justify {
+  text-align: justify;
+  text-justify: inter-character;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hanging-punctuation: allow-end;
+}
+
+.embed_movie{
+  width:100%;
+  aspect-ratio:16 / 9;
+  overflow: hidden;
+  iframe{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// =============================================
+// Article / Works
+// =============================================
+
+#worksDetail{
+  .works_detail_wrapper{
+    .detail_item{
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 4.5rem;
+      margin-bottom: 6.5rem;
+
+      p{
+        font-size: 1.4rem;
+        line-height: 175%;
+      }
+      @include mx-desktop-s{
+        display: block;
+        margin-bottom: 16vw;
+        p{
+          font-size: getClampFont(3.2);
+          span.sholder{
+            margin-bottom: 0;
+          }
+        }
+      }
+      //for Animation
+      p{
+        span{
+          display: inline-block;
+          clip-path: inset(0 0 0 0);
+          transition: clip-path .5s $easeOutSine 1s;
+          &.sholder{
+            transition-delay: .5s;
+          }
+        }
+      }
+
+      &.init{
+        p{
+          span{
+            transition: none;
+            clip-path: inset(0 100% 0 0);
+          }
+        }
+      }
+    }
+  }
+  .article_item{
+    margin-bottom: 4rem;
+    @include mx-desktop-s{
+      margin-bottom: 5.2vw;
+    }
+  }
+
+  hgroup{
+    min-width: 34rem;
+    padding: 0;
+  }
+  
+  .article_text{
+    position: relative;
+    margin: 7.7rem auto;
+    padding: 7.7rem 0 3rem;
+
+    &::before{
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 1px;
+      background: $color-gray-mid;
+    }
+
+    @include mx-desktop-s{
+      margin: 15vw auto 12vw;
+      padding: 12vw 0 0;
+    }
+
+    h2{
+      font-size: 2.1rem;
+      line-height: 190%;
+      display: block;
+      width: 100%;
+      padding-right:60%;
+
+      @include mx-desktop-s{
+        font-size: getClampFont(4.8);
+        line-height: 155%;
+        padding-right:0;
+        margin-bottom: 9vw;
+      }
+    }
+
+    .article_description{
+      padding: 0 0 0 42%;
+      @include mx-desktop-s{
+        padding: 0;
+      }
+    }
+
+    //for Animation
+    &::before{
+      transition: width .75s $easeOutSine;
+    }
+    p.sholder{
+      transition: transform .5s $easeOutCubic,opacity .5s linear;
+      transition-delay: .25s;
+    }
+    h2{
+      transition: transform .5s $easeOutCubic,opacity .5s linear;
+      transition-delay: .5s;
+    }
+    .article_description{
+      transition: transform .5s $easeOutCubic,opacity .5s linear;
+      transition-delay: .75s;
+    }
+    &.init{
+      &::before{
+        transition: none;
+        width: 0%;
+      }
+      p.sholder,h2,.article_description{
+        transition: none;
+        transform: translateY(50px);
+        opacity: 0;
+      }
+    }
+  }
+}
+
+// =============================================
+// Article / Dialogue
+// =============================================
+
+#dialogueDetail{
+  h1{
+    font-size: 3.2rem;
+    line-height: 137.5%;
+    margin-bottom: 3rem;
+
+    @include mx-desktop-s{
+      font-size: getClampFont(4.8);
+    }
+  }
+  .dialogue_description{
+    p.sholder{
+      margin: 0;
+    }
+    p.interviewer{
+      font-size: 1.8rem;
+      line-height: 177%;
+    }
+
+    @include mx-desktop-s{
+      p.interviewer,
+      p.sholder{
+        font-size: getClampFont(2.666);
+      }
+    }
+    //for Animation
+    p{
+      clip-path: inset(0 0 0 0);
+      transition: clip-path .5s $easeOutSine .5s;
+    }
+
+    &.init{
+      p{
+        transition: none;
+        clip-path: inset(0 100% 0 0);
+      }
+    }
+  }
+
+  .dialogue_firstview{
+    margin-top: 6rem;
+    .first_block,
+    .contents_block{
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    @include mx-desktop-s{
+      margin-top: 10vw;
+    }
+
+    //for Animation
+    .first_block,
+    .contents_block{
+      transition: transform .75s $easeOutCubic,opacity .75s linear;
+      transition-delay: .5s;
+    }
+    .contents_block{
+      transition-delay: .75s;
+    }
+    &.init{
+      .first_block,
+      .contents_block{
+        transition: none;
+        transform: translateY(50px);
+        opacity: 0;
+      }
+    }
+  }
+
+  .first_block{
+    padding-right: 8%;
+    @include mx-desktop-s{
+      padding-right: 0;
+    }
+  }
+
+  .article_contents{
+    .first_block{
+      padding-top: 0;
+      .dialogue_index{
+        padding-top: 12rem;
+        .dialogue_index_item{
+          position: relative;
+          padding: 3.6rem 0;
+          &::after,&::before{
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 1px;
+            background: $color-gray-mid;
+          }
+          &::after{
+            top: auto;
+            bottom: 0;
+          }
+          
+          ul.index_list{
+            margin: 3.6rem 0 0;
+            display: flex;
+            flex-direction: column;
+            row-gap: 2.8rem;
+            li{
+              a{
+                font-size: 1.3rem;
+                color: $color-gray-mid;
+                transition: color .25s linear;
+                &.active,&.hover{
+                  color: $color-black;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      @include mx-desktop-s{
+        .dialogue_index{
+          padding-top: 0;
+          .dialogue_index_item{
+            position: relative;
+            padding: 6vw 0;
+            margin-top: 4vw;
+            
+            ul.index_list{
+              margin: 6vw 0 0;
+              display: flex;
+              flex-direction: column;
+              row-gap: 6vw;
+              li{
+                a{
+                  font-size: getClampFont(3.2);
+                  color: $color-black;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .contents_block{
+      padding-top: 7rem;
+
+      h2.article_ttl{
+        font-size: 2.3rem;
+        line-height: 174%;
+        padding-top: 4rem;
+        margin-bottom: 6.5rem;
+      }
+      p{
+        margin-bottom: 4.5rem;
+        b{
+          font-size: 110%;
+        }
+      }
+      .img_wrap{
+        margin-top:1.5rem;
+      }
+
+      @include mx-desktop-s{
+        padding-top: 6vw;
+
+        h2.article_ttl{
+          font-size: getClampFont(4.8);
+          margin-bottom: 15vw;
+          padding-top: 2vw;
+        }
+        p{
+          margin-bottom: 15vw;;
+        }
+        .img_wrap{
+          margin-top:4vw;
+        }
+      }
+    }
+  }
+}
+
+// =============================================
+// Article / D:Log
+// =============================================
+
+#dlogDetail{
+  .dlog_description{
+    p{
+      margin: 0;
+      line-height: 140%;
+    }
+    @include mx-desktop-s{
+      padding:10vw 0 0;
+    }
+  }
+  .article_contents{
+    .contents_block{
+      padding-top: 6rem;
+    }
+    @include mx-desktop-s{
+      .contents_block{
+        padding-top: 10vw;
+      }
+    }
+  }
+
+  .more_btn{
+    margin: 10rem 0;
+    @include mx-desktop-s{
+      margin:18vw 0 10vw;
+    }
+  }
+}
+
+//===============================================
+// YouTube embed
+.wp-block-embed__wrapper {
+  width: 100%;
+  height: 0;
+  position: relative;
+  padding-top: 56.25%;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+// Staff credits
+.staff {
+  &__header {
+    max-width: $max-width;
+    margin: 0 auto;
+
+    &__title {
+      margin-top: 4.0rem;
+      padding-top: 3.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      border-top: solid 1px $color-black;
+
+      @include tablet {
+        font-size: 2.2rem;
+      }
+    }
+  }
+
+  &__container {
+    max-width: $max-width;
+    margin: 0 auto;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &.agency {
+        margin-top: 3em;
+        color: #888;
+      }
+    }
+
+    li {
+      margin-right: 4.0em;
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+
+      @include tablet {
+        font-size: 1.8rem;
+      }
+    }
+  }
+}

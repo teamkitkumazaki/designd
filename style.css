@@ -1,0 +1,85 @@
+@charset "utf-8";
+/* ---------------------------------------------------------
+Theme Name: DESIGN:D_ver2
+Theme URI: https://designd.jp/
+Description: デザインで株式会社 WordPressテーマ
+Author: VONS
+Author URI: 
+Version: 1.0.0
+--------------------------------------------------------- */
+/*
+ *
+ * INSTRUCTIONS
+ *
+ * Copy the Legal Disclaimer and the @font-faces statements to your regular CSS file.
+ * The font file(s) should be placed relative to the regular CSS file.
+ *
+ */
+
+/*
+ * Legal Disclaimer for Web licence
+ *
+ * Licence to use self-hosted webfonts for displaying dynamic text on specified website domains. Our package includes WOFF and WOFF2 font formats.
+ *
+ * Should the license page views limit be exceeded the license holder will be required to contact Lineto.com for an upgrade.
+ * 
+ * It is strictly prohibited to rename the font and to download or use these fonts in any other media. 
+ * 
+ * These Web fonts are licensed exclusively for the use on the following domain(s) and their subdomains:
+ *
+ * designd.jp (monthly pageviews: <50K)
+ *
+ */
+
+/* To embed Google fonts
+----------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');*/
+
+/* css framework Structur nendo version
+----------------------------------------------------------- */
+@import url("assets/css/structur.css");
+
+/* main style
+----------------------------------------------------------- */
+@import url("assets/css/main.css?date=20230412");
+
+/* To embed Woff/Woff2
+----------------------------------------------------------- */
+
+@font-face {
+    font-family: 'IPAexGothic';
+    src:url('./assets/font/ipaexg.ttf') format('truetype'), 
+        url('./assets/font/ipaexg.woff2') format('woff2'),
+        url('./assets/font/ipaexg.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* Circular XX Sub web fonts
+----------------------------------------------------------- */
+@font-face {
+    font-family: 'CircularXX';
+    src: url('assets/font/CircularXXSub-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'CircularXX';
+    src: url('assets/font/CircularXXSub-Book.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'CircularXX';
+    src: url('assets/font/CircularXXSub-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}

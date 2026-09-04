@@ -1,0 +1,158 @@
+@use "setting" as *;
+
+// =============================================
+// Article / Works
+// =============================================
+
+#worksDetail{
+  .works_detail_wrapper{
+    .detail_item{
+      display: flex;
+      column-gap: 4.5rem;
+      margin-bottom: 6.5rem;
+
+      p{
+        font-size: 1.4rem;
+        line-height: 175%;
+        span.sholder{
+          color: $color-gray-mid;
+          margin-bottom: .5rem;
+          display: inline-block;
+        }
+      }
+      @include mx-desktop-s{
+        display: block;
+        margin-bottom: 16vw;
+        p{
+          font-size: 3.2vw;
+          span.sholder{
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+  .article_item{
+    margin-bottom: 4rem;
+  }
+
+  hgroup{
+    min-width: 34rem;
+    padding: 0;
+  }
+  .sticky_inner{
+    padding-bottom: 26rem;
+
+    @include mx-desktop-s{
+      padding-top: 12vw;
+      padding-bottom: 12vw;
+    }
+  }
+  p.sholder{
+    font-size:1.4rem;
+    color: $color-gray-mid;
+
+    @include mx-desktop-s{
+      font-size: 3.2vw;
+    }
+  }
+  h2{
+    font-size: 2.1rem;
+    line-height: 190%;
+    display: block;
+    width: 90%;
+    @include mx-desktop-s{
+      font-size: 4.8vw;
+      line-height: 155%;
+    }
+  }
+  .article_text{
+    position: relative;
+    margin: 7.7rem auto;
+
+    &::before{
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 1px;
+      background: $color-gray-mid;
+    }
+
+    @include mx-desktop-s{
+      margin: 12vw auto;
+    }
+  }
+  .article_description{
+    padding-top: 26rem;
+    @include mx-desktop-s{
+      padding-top: 0;
+    }
+  }
+}
+
+// YouTube embed
+.wp-block-embed__wrapper {
+  width: 100%;
+  height: 0;
+  position: relative;
+  padding-top: 56.25%;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+// Staff credits
+.staff {
+  &__header {
+    max-width: $max-width;
+    margin: 0 auto;
+
+    &__title {
+      margin-top: 4.0rem;
+      padding-top: 3.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      border-top: solid 1px $color-black;
+
+      @include tablet {
+        font-size: 2.2rem;
+      }
+    }
+  }
+
+  &__container {
+    max-width: $max-width;
+    margin: 0 auto;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &.agency {
+        margin-top: 3em;
+        color: #888;
+      }
+    }
+
+    li {
+      margin-right: 4.0em;
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+
+      @include tablet {
+        font-size: 1.8rem;
+      }
+    }
+  }
+}
