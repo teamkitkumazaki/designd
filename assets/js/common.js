@@ -12,7 +12,10 @@ window.addEventListener('pageshow', function (e) {
 
 
 // Cursor tip
-$(window).on('load', function () {
+// 変更点: window の load(画像/動画/フォント等の全リソース読込完了)を待たず、
+// DOMContentLoaded 相当のこのタイミングで実行する(ファーストビュー描画後に
+// カーソル演出・カバー解除・アコーディオン等の初期化を行うため)。
+$(function () {
 	const el = document.querySelector('.cursor_tip');
 	const tip = el ? el.querySelector('p.tip') : null;
 	const arrow = el ? el.querySelector('.hover_cursor') : null;
@@ -166,6 +169,13 @@ $(function(){
 
 	/* animsition
 	================================================*/
+	// 変更点: onLoadEvent を false にし、animsition内部の
+	// $(window).on('load', ...) による発火(画像/動画/フォント等の
+	// 全リソース読込完了を待つ)を無効化。代わりにこの$(function(){...})
+	// (DOMContentLoaded相当のタイミング=ファーストビュー描画後)で
+	// 明示的に .animsition('in') を呼び、フェードインを開始する。
+	// これにより「ページ全体を読み込まないとアニメーションが終わらない」
+	// 問題を解消しつつ、既存の見た目(fade-in/fade-out-up-sm等)は変更しない。
 	$(".animsition").animsition({
 		inClass : 'fade-in', // ロード時のエフェクト
 		outClass : 'fade-out-up-sm', // 離脱時のエフェクト
@@ -181,7 +191,8 @@ $(function(){
 						'-o-animation-duration'],
 		overlay : false, //オーバーレイの有効/無効
 		overlayClass : 'animsition-overlay-slide', //オーバーレイのクラス
-		overlayParentElement : 'body' //オーバーレイ要素のラッパー
+		overlayParentElement : 'body', //オーバーレイ要素のラッパー
+		onLoadEvent : false //window.loadでのin()自動発火を無効化(下で明示的に呼ぶ)
 	})
 		.one('animsition.inStart',function(){
 			//console.log('event -> inStart');
@@ -205,6 +216,10 @@ $(function(){
 	$('.animsition').on('animsition.inEnd', function(){
 		// console.log('inEnd');
 	});
+
+	// 上記の animsition.inStart/inEnd ハンドラ登録が完了した後に、
+	// window.load を待たずここでフェードインを開始する。
+	$(".animsition").animsition('in');
 
 
 	$('.fadein').on('inview', function(event, isInView){
