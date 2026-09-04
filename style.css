@@ -8,15 +8,13 @@ Author URI:
 Version: 1.0.0
 --------------------------------------------------------- */
 /*
+ * 表示速度改善(第二段階): このファイルはWordPressテーマとして必須の
+ * ヘッダー情報(Theme Name等)を保持するためだけに残しています。
+ * 以前ここで @import していた structur.css / main.css / 各種 @font-face は
+ * assets/css/app.min.css に統合し、header.php から <link> で並列読み込み
+ * するように変更しました(CSSの@importは直列読み込みになり表示開始が
+ * 遅くなるため)。
  *
- * INSTRUCTIONS
- *
- * Copy the Legal Disclaimer and the @font-faces statements to your regular CSS file.
- * The font file(s) should be placed relative to the regular CSS file.
- *
- */
-
-/*
  * Legal Disclaimer for Web licence
  *
  * Licence to use self-hosted webfonts for displaying dynamic text on specified website domains. Our package includes WOFF and WOFF2 font formats.
@@ -30,59 +28,3 @@ Version: 1.0.0
  * designd.jp (monthly pageviews: <50K)
  *
  */
-
-/* To embed Google fonts
------------------------------------------------------------ */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
-/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');*/
-
-/* css framework Structur nendo version
------------------------------------------------------------ */
-@import url("assets/css/structur.css");
-
-/* main style
------------------------------------------------------------ */
-@import url("assets/css/main.css?date=20230412");
-
-/* To embed Woff/Woff2
------------------------------------------------------------ */
-
-@font-face {
-    font-family: 'IPAexGothic';
-    /* 表示速度改善: 使用頻度の高い常用漢字・かな・記号等に絞ったサブセット版に変更。
-       また、ブラウザが最初に対応形式を採用する仕様に合わせて
-       軽量なwoff2を最優先、次点woff、最後にttfの順に修正(以前はttfが先頭で非効率だった)。 */
-    src: url('./assets/font/ipaexg.woff2') format('woff2'),
-         url('./assets/font/ipaexg.woff') format('woff'),
-         url('./assets/font/ipaexg.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-
-/* Circular XX Sub web fonts
------------------------------------------------------------ */
-@font-face {
-    font-family: 'CircularXX';
-    src: url('assets/font/CircularXXSub-Light.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'CircularXX';
-    src: url('assets/font/CircularXXSub-Book.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'CircularXX';
-    src: url('assets/font/CircularXXSub-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}

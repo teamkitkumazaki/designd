@@ -30,9 +30,13 @@
 		<!-- PRELOAD: 本文で広く使用する日本語サブセットフォントを優先的に読み込み、文字のちらつき(FOUT)を軽減 -->
 		<link rel="preload" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/font/ipaexg.woff2" as="font" type="font/woff2" crossorigin>
 		<!-- CSS -->
-		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/vendor/animsition/css/animsition.min.css">
-		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/vendor/modaal/css/modaal.min.css">
-		<link rel="stylesheet" href="<?php bloginfo( 'stylesheet_url' ); ?>?date=20240801">
+		<!-- 表示速度改善(第二段階): Google Fonts / animsition.min.css / modaal.min.css /
+		     structur.css / main.css / 各種@font-faceに分かれていた読み込みを
+		     assets/css/app.min.css の1本に統合し、リクエスト数を削減。
+		     style.css は WordPress テーマ情報(Theme Name等)保持用として
+		     残しているのみで、フロント表示には読み込んでいない。 -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
+		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/css/app.min.css?date=20260904">
 <?php wp_head(); ?>
 
 <?php
