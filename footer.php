@@ -56,7 +56,7 @@
 			</div>
 			<div class="footer_block3">
 				<a href="<?php echo esc_url( home_url() )?>" class="footer_logo animsition-link">
-					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo.svg" alt="<?php bloginfo( 'name' ); ?>">
+					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo.svg" alt="<?php bloginfo( 'name' ); ?>" decoding="async">
 				</a>
 				<div class="footer_util">
 					<a href="#privacy-modal" class="hover_dflt font-en inline-modal">Privacy Policy</a>
@@ -67,7 +67,7 @@
 			</div>
 			<div class="footer__logomark">
 				<div class="logomark">
-					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo_mark.svg" alt="">
+					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo_mark.svg" alt="" decoding="async">
 				</div>
 			</div>
 		</div>
@@ -77,12 +77,12 @@
 <div class="cursor_tip">
 	<p class="tip"></p>
 	<div class="hover_cursor">
-		<span class="arrow"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/cursor_arrow.svg" alt=""></span>
+		<span class="arrow"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/cursor_arrow.svg" alt="" decoding="async"></span>
 	</div>
 </div>
 <div class="cover"></div>
 <div id="js-opening" class="opening">
-	<h2 class="opening__logo"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo_opening.svg" alt=""></h2>
+	<h2 class="opening__logo"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/logo_opening.svg" alt="" decoding="async"></h2>
 </div>
 
 

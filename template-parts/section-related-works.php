@@ -63,7 +63,7 @@ if (!$the_query->have_posts()) {
 										$alternative_image_url = wp_get_attachment_image_src($alternative_image_id, 'medium_large')[0];
 								?>
 									<figure class="alternative_image">
-										<img src="<?= esc_url($alternative_image_url); ?>" alt="" loading="lazy">
+										<img src="<?= esc_url($alternative_image_url); ?>" alt="" loading="lazy" decoding="async">
 									</figure>
 								<?php endif; endif; ?>
 
@@ -71,7 +71,7 @@ if (!$the_query->have_posts()) {
 									if (has_post_thumbnail()) {
 										the_post_thumbnail('medium_large', array('loading' => 'lazy'));
 									} else {
-										echo '<img src="' . esc_url(get_template_directory_uri()) . '/assets/images/alternative_image.jpg" alt="" loading="lazy">';
+										echo '<img src="' . esc_url(get_template_directory_uri()) . '/assets/images/alternative_image.jpg" alt="" loading="lazy" decoding="async">';
 									}
 								?></figure>
 							</dt>

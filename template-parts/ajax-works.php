@@ -31,7 +31,7 @@ if ($movie) {
 					$alternative_image_url = $alternative_image[0];
 			?>
 				<figure class="alternative_image">
-					<img src="<?php echo esc_url($alternative_image_url); ?>" alt="" loading="lazy">
+					<img src="<?php echo esc_url($alternative_image_url); ?>" alt="" loading="lazy" decoding="async">
 				</figure>
 			<?php endif; endif; ?>
 
@@ -39,7 +39,7 @@ if ($movie) {
 				if (has_post_thumbnail()) {
 					the_post_thumbnail('medium_large', array('loading' => 'lazy'));
 				} else {
-					echo '<img src="' . esc_url(get_template_directory_uri()) . '/assets/images/alternative_image.jpg" alt="" loading="lazy">';
+					echo '<img src="' . esc_url(get_template_directory_uri()) . '/assets/images/alternative_image.jpg" alt="" loading="lazy" decoding="async">';
 				}
 			?></figure>
 		</dt>

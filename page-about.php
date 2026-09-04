@@ -254,10 +254,10 @@ get_header(); ?>
 				<div class="member_item anim-trigger" data-trigger-timing="100">
 					<div class="member_img_wrap">
 						<div class="img_item">
-							<img loading="lazy" class="portrait" src="<?= $profile_img01_url[0] ?>">
+							<img loading="lazy" decoding="async" class="portrait" src="<?= $profile_img01_url[0] ?>">
 						</div>
 						<div class="img_item">
-							<img loading="lazy" class="portrait" src="<?= $profile_img02_url[0] ?>">
+							<img loading="lazy" decoding="async" class="portrait" src="<?= $profile_img02_url[0] ?>">
 						</div>
 					</div>
 					<div class="member_detail accordion-parent">

@@ -333,14 +333,23 @@ function create_pagination() {
 	) );
 	echo '</nav>';
 }
-add_filter( 'big_image_size_threshold', '__return_false' );
+/* -----------------------------------------------
+ * アップロード画像の大サイズ生成しきい値
+ * ※以前は無効化(元画像そのまま)にしていたが、
+ *   表示速度改善のためWordPress既定値(2560px)に戻す
+ ---------------------------------------------- */
+add_filter( 'big_image_size_threshold', function( $threshold ) {
+	return 2560;
+} );
 
 
 
 /* -----------------------------------------------
  * アップロード画像の圧縮率を変更
+ * ※100(無圧縮)だとファイルサイズが肥大化するため、
+ *   画質劣化がほぼ視認できない82に戻す
  ---------------------------------------------- */
-add_filter( 'jpeg_quality', function( $arg ){ return 100; } );
+add_filter( 'jpeg_quality', function( $arg ){ return 82; } );
 
 
 
@@ -657,5 +666,39 @@ add_filter( 'ppp_nonce_life', 'my_nonce_life' );
 function my_nonce_life() {
     return 60 * 60 * 24 * 14; // 2 weeks
 }
+
+
+/* -----------------------------------------------
+ * Speculative Loading (speculationrules) の見直し
+ * WordPress 6.8 で標準搭載された先読み機能。
+ * 既定では「同一オリジンの全リンク」がprefetch対象になっているが、
+ * ・AJAXでフィルタリングされるアーカイブページ(works/dialogue/dlog)
+ * ・お問い合わせページ(フォーム誤動作防止のため)
+ * ・WordPress標準の除外対象(wp-admin等)以外の管理系
+ * は不要な先読みでサーバー負荷やモバイル通信量が増える可能性があるため、
+ * 対象パスから除外する。
+ * -------------------------------------------- */
+add_filter( 'wp_speculation_rules_href_exclude_paths', function( $href_exclude_paths ) {
+	$href_exclude_paths[] = '/contact/*';
+	$href_exclude_paths[] = '/works/*';
+	$href_exclude_paths[] = '/dialogue/*';
+	$href_exclude_paths[] = '/dlog/*';
+	return $href_exclude_paths;
+} );
+
+/* -----------------------------------------------
+ * Speculative Loading の積極度(eagerness)を明示的に指定
+ * 既定は「conservative」(リンクをクリックしようとした瞬間に先読み)のため、
+ * 誤って先読みが多発するリスクは低い。ここでは既定のconservativeを
+ * 明示指定しつつ、モードはprefetch(取得のみ・描画はしない)に固定して
+ * 予期せぬ画面のちらつき等を避ける。
+ * -------------------------------------------- */
+add_filter( 'wp_speculation_rules_configuration', function( $config ) {
+	if ( is_array( $config ) ) {
+		$config['mode']      = 'prefetch';
+		$config['eagerness'] = 'conservative';
+	}
+	return $config;
+} );
 
 ?>
