@@ -217,10 +217,6 @@ $(function(){
 		// console.log('inEnd');
 	});
 
-	// 上記の animsition.inStart/inEnd ハンドラ登録が完了した後に、
-	// window.load を待たずここでフェードインを開始する。
-	$(".animsition").animsition('in');
-
 
 	$('.fadein').on('inview', function(event, isInView){
 		if (isInView) {
@@ -273,6 +269,16 @@ $(function(){
 			if (lenis) lenis.scrollTo('#aboutus__member', { duration: 1.2 });
 		});
 	}
+
+	// フェードイン開始(window.loadを待たずここで実行)。
+	// 修正: 直前の「.anim-trigger/.anim-trigger-fade へ .init クラスを付与」する
+	// 処理より後にこれを呼ぶ必要がある。animsition('in') は inStart イベント経由で
+	// scrollEventHandler() を実行し、その中で「画面内に入っている .anim-trigger 要素の
+	// .init を外す」判定を行うため、.init 付与がまだ完了していない状態で
+	// scrollEventHandler() が走ると何も判定できず、結果としてユーザーが実際に
+	// スクロール/リサイズしない限りファーストビューの要素が表示されないままになる
+	// (「スクロールさせないとファーストビューの要素が表示されない」不具合の原因)。
+	$(".animsition").animsition('in');
 
 });
 
