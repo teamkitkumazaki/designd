@@ -22,16 +22,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	if (openingFlg) {
 		// 外部サイトからの初回アクセス: スプラッシュ画面を表示してからopening()を実行
-		document.body.classList.add('is-fix');
+		//
+		// 修正: 「ブラウザで最初にトップページを開いた時だけファーストビューが
+		// 表示されないままになる」不具合対策。
+		// 従来はsetTimeoutを入れ子(ネスト)にしていたため、外側のコールバック内で
+		// 何かひとつでも例外が発生する(あるいは想定外の理由で処理が止まる)と、
+		// 内側のsetTimeoutが一度もスケジュールされず、opening()(.initを外す
+		// 本体)が永久に呼ばれないままになるリスクがあった。初回アクセスは
+		// キャッシュが空で読み込みが重く、この待機時間中に何らかの例外や
+		// タブのバックグラウンド化によるタイマー遅延が起きやすく、症状と一致する。
+		// また、この間openingFlgはtrueのままのため、common.js側のウォッチドッグ
+		// (cmnOpenHandler経由)はガード条件により一切救済できなかった。
+		//
+		// 対策: 各ステップを最初から独立してスケジュールし(入れ子にしない)、
+		// かつtry/catchで保護することで、途中の処理が失敗しても後続の処理
+		// (最終的なopening()の呼び出し)が必ず実行されるようにする。
+		try {
+			document.body.classList.add('is-fix');
+		} catch (e) {}
 		if (elm) elm.style.display = '';
+
 		setTimeout(function() {
-			if (elm) elm.classList.add('is-end');
-			setTimeout(function() {
-				document.body.classList.remove('is-fix');
-				openingFlg = false;
-				opening(200);
-			}, 500);
+			try {
+				if (elm) elm.classList.add('is-end');
+			} catch (e) {}
 		}, 5000);
+
+		setTimeout(function() {
+			try {
+				document.body.classList.remove('is-fix');
+			} catch (e) {}
+			openingFlg = false;
+			opening(200);
+		}, 5500);
 	}
 	// 内部遷移(サイト内からの再訪問)の場合はここでは何もしない。
 	// opening()はcommon.js側から呼ばれるcmnOpenHandler()経由で実行される。

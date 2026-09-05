@@ -323,6 +323,25 @@ $(function(){
 			watchdogCount++;
 			if (typeof cmnOpenHandler === 'function') cmnOpenHandler();
 			scrollEventHandler();
+
+			// フェイルセーフ: 「ブラウザで最初にトップページを開いた時だけ
+			// ファーストビューが表示されないまま」になる不具合対策。
+			// TOPページの初回アクセス時は openingFlg が true のままになる
+			// 期間があり、その間 cmnOpenHandler() 内の if(!openingFlg) ガードに
+			// より opening()(.init解除本体)の呼び出しがスキップされるため、
+			// 上のウォッチドッグ呼び出しだけでは救済できないケースがある。
+			// (本来は top.js 側の setTimeout 処理で openingFlg が false に
+			// 戻り opening() が呼ばれるが、何らかの理由でその処理が想定通りに
+			// 走らなかった場合の保険として、一定回数経過後は openingFlg の
+			// 状態に関わらず、残っている .init を強制的に解除する)
+			if (watchdogCount >= 8) {
+				document.querySelectorAll(
+					'.introduction__copy-jp.init, .introduction__bg.init'
+				).forEach(function (el) {
+					el.classList.remove('init');
+				});
+			}
+
 			if (watchdogCount >= watchdogMax) {
 				clearInterval(watchdogTimer);
 			}
