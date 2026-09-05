@@ -303,6 +303,32 @@ $(function(){
 		$(".animsition").animsition('in');
 	});
 
+	// ウォッチドッグ: ファーストビュー表示の保険処理。
+	// 背景: 強制リフロー+rAFの対策を入れても、環境(回線速度/フォント読込/
+	// 動画メタデータ取得等)によっては、まれに一度も .init 解除処理
+	// (cmnOpenHandler経由のopening()、およびscrollEventHandler経由の
+	// .anim-trigger判定)が正しいタイミングで走らず、要素が.init付き
+	// (非表示)のまま固まってしまうケースが残り得る。
+	// 原因を1つに断定するより先に、「表示されないまま固まる」ことを
+	// 確実に防ぐため、cmnOpenHandler() / scrollEventHandler() を一定間隔で
+	// 繰り返し呼び出すウォッチドッグを設置する。
+	// 両関数とも「既に.initが外れている要素には何もしない」冪等な処理のため、
+	// 繰り返し呼んでも表示中の要素に悪影響はない(anim-triggerは画面内に
+	// 入っている場合のみinitを外す判定なので、画面外の要素を誤って
+	// 表示してしまうこともない)。
+	(function () {
+		var watchdogCount = 0;
+		var watchdogMax = 15; // 最大15回(約15秒間)繰り返す
+		var watchdogTimer = setInterval(function () {
+			watchdogCount++;
+			if (typeof cmnOpenHandler === 'function') cmnOpenHandler();
+			scrollEventHandler();
+			if (watchdogCount >= watchdogMax) {
+				clearInterval(watchdogTimer);
+			}
+		}, 1000);
+	})();
+
 });
 
 //Scroll Event
