@@ -262,6 +262,24 @@ $(function(){
 		$(this).addClass('init');
 	});
 
+	// 修正: 「時間差フェードインが動いたり動かなくなったりする」不具合対策。
+	// 背景: 上の「.init 付与」の直後、同一の同期処理内で animsition('in') を
+	// 呼ぶと、inStart イベント経由で scrollEventHandler() が同期的に実行され、
+	// 画面内に入っている .anim-trigger/.anim-trigger-fade(および txt_split の
+	// h3 要素)から即座に .init が外される。ブラウザが一度も「.init が付いた
+	// 状態」を描画(スタイル計算)しないまま、付与→除去が同一ティック内で
+	// 連続すると、ブラウザ側で2つのスタイル変更が1回の計算にまとめられて
+	// しまい、CSSトランジション(opacity/transformのフェードイン)が発火せずに
+	// スキップされることがある。scrollEventHandler() 内には .fadein 要素の
+	// offset().top 読み取りなど、たまたま強制リフローが発生する処理も混在する
+	// ため、ページの要素構成やリソース読込タイミングによって「動く/動かない」が
+	// ランダムに変化していた。
+	// 対策: .init 付与の直後に document.body.offsetHeight を読み取り、強制的に
+	// レイアウト/スタイル計算を確定させることで、.init が付与された状態を
+	// ブラウザへ確実に一度認識させる。これにより、この後の .init 解除が
+	// 「新しいスタイル変更」として扱われ、トランジションが毎回確実に発火する。
+	void document.body.offsetHeight;
+
 	// Member リンク：aboutページなら animsition を無効化してスクロール
 	if ($('#aboutus__member').length) {
 		$('.navigation-abuout a').removeClass('animsition-link').on('click', function (e) {
@@ -271,14 +289,19 @@ $(function(){
 	}
 
 	// フェードイン開始(window.loadを待たずここで実行)。
-	// 修正: 直前の「.anim-trigger/.anim-trigger-fade へ .init クラスを付与」する
+	// 直前の「.anim-trigger/.anim-trigger-fade へ .init クラスを付与」する
 	// 処理より後にこれを呼ぶ必要がある。animsition('in') は inStart イベント経由で
 	// scrollEventHandler() を実行し、その中で「画面内に入っている .anim-trigger 要素の
 	// .init を外す」判定を行うため、.init 付与がまだ完了していない状態で
 	// scrollEventHandler() が走ると何も判定できず、結果としてユーザーが実際に
 	// スクロール/リサイズしない限りファーストビューの要素が表示されないままになる
 	// (「スクロールさせないとファーストビューの要素が表示されない」不具合の原因)。
-	$(".animsition").animsition('in');
+	// さらに上記の強制リフローに加え、requestAnimationFrame で1フレーム後に
+	// 実行することで、ブラウザの描画サイクルを跨がせ、トランジションの
+	// 発火をより確実にする(二重の安全策)。
+	requestAnimationFrame(function () {
+		$(".animsition").animsition('in');
+	});
 
 });
 
