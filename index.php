@@ -40,7 +40,7 @@ get_header(); ?>
 				</div>
 			</div>
 			<div class="introduction__bg init">
-				<video loop muted playsinline autoplay preload="metadata">
+				<video loop muted playsinline autoplay preload="metadata" poster="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/video_top_poster.jpg">
 					<source src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/video/DESIGN-D_Top.mp4" type="video/mp4">
 				</video>
 			</div>
