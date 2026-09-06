@@ -13,8 +13,8 @@ get_header(); ?>
 			<div class="fix_inner">
 				<h3 class="font-en deco_w-dot txt_split anim-trigger tip-trigger" data-text="私たちについて">About Us</h3>
 				<div class="mv_container">
-					<video loop muted playsinline autoplay preload="metadata" poster="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/video_about1_poster.jpg">
-						<source src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/video/DESIGN-D_about_1.mp4" type="video/mp4">
+					<video class="js-lazy-video" loop muted playsinline autoplay preload="none" poster="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/video_about1_poster.jpg">
+						<source data-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/video/DESIGN-D_about_1.mp4" type="video/mp4">
 					</video>
 				</div>
 			</div>
@@ -55,8 +55,8 @@ get_header(); ?>
 				</div>
 
 				<div class="mv_container anim-trigger" data-trigger-timing="50">
-					<video loop muted playsinline autoplay preload="metadata" poster="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/video_about2_poster.jpg">
-						<source src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/video/DESIGN-D_about_2.mp4" type="video/mp4">
+					<video class="js-lazy-video" loop muted playsinline autoplay preload="none" poster="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/video_about2_poster.jpg">
+						<source data-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/video/DESIGN-D_about_2.mp4" type="video/mp4">
 					</video>
 				</div>
 			</div>

@@ -124,6 +124,34 @@ $(function () {
 $(function(){
 	ua.checkAgent();
 
+	// 動画の遅延読み込み(preload="none" + data-src で保留していた分の読込開始)。
+	// 背景: <video><source src="..."> をHTMLに直接書くと、ブラウザのプリロード
+	// スキャナがJS実行前・HTMLパース時点で動画バイトのダウンロードを開始してしまい、
+	// フェードイン表示に必要なjQuery/Lenis/animsition/common.js等のスクリプト
+	// ダウンロードと帯域を奪い合う。その結果、ページ読込全体は完了していても
+	// 「ファーストビューの表示自体が遅く感じる」体感速度の悪化につながっていた。
+	// 対策: 該当videoは preload="none" + <source data-src="..."> にHTML側を変更済み
+	// (プリロードスキャナに拾わせない)。ここで最優先(他の初期化処理より前)に
+	// data-src を実際の src へ設定し明示的に load() を呼ぶことで、フェードイン用
+	// スクリプトの読込を妨げずに、できるだけ早いタイミングで動画取得を開始する。
+	// poster 画像が設定されているため、動画取得中も見た目上の空白は発生しない。
+	document.querySelectorAll('.js-lazy-video').forEach(function (video) {
+		if (video.dataset.lazyLoaded) return;
+		video.dataset.lazyLoaded = '1';
+		video.querySelectorAll('source[data-src]').forEach(function (source) {
+			source.src = source.dataset.src;
+			delete source.dataset.src;
+		});
+		video.load();
+		// autoplay属性により通常は自動再生されるが、環境によっては明示的な
+		// play()呼び出しが必要な場合があるため保険として実行する
+		// (再生不可のPromise拒否はUXに影響しないため握りつぶす)。
+		var playPromise = video.play();
+		if (playPromise && typeof playPromise.catch === 'function') {
+			playPromise.catch(function () {});
+		}
+	});
+
 	//Lenis
 	//------------------------------------
 	lenis = new Lenis({
