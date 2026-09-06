@@ -3,20 +3,21 @@ referrer = document.referrer;
 
 let openingFlg = false;
 
-$(function(){
-	
+document.addEventListener('DOMContentLoaded', function(){
+
 });
 
 function opening( sec ) {
 	setTimeout(function(){
-		$('#aboutus__msg').addClass('view');
+		var msg = document.getElementById('aboutus__msg');
+		if (msg) msg.classList.add('view');
 
 		var hash = window.location.hash;
 		if (hash) {
-			var $target = $(hash);
-			if ($target.length && lenis) {
+			var target = document.querySelector(hash);
+			if (target && lenis) {
 				setTimeout(function(){
-					lenis.scrollTo($target[0], { duration: 0.75 });
+					lenis.scrollTo(target, { duration: 0.75 });
 				},500)
 			}
 		}
@@ -33,7 +34,7 @@ function cmnResizeHandler(){
 }
 
 function cmnScrollHandler(){
-	const scrpx = $(window).scrollTop();
+	const scrpx = window.pageYOffset || document.documentElement.scrollTop;
 	const innerH = window.innerHeight;
 
 	const inner2 = document.querySelector('.inner2');

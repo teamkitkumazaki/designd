@@ -34,9 +34,12 @@
 		     structur.css / main.css / 各種@font-faceに分かれていた読み込みを
 		     assets/css/app.min.css の1本に統合し、リクエスト数を削減。
 		     style.css は WordPress テーマ情報(Theme Name等)保持用として
-		     残しているのみで、フロント表示には読み込んでいない。 -->
+		     残しているのみで、フロント表示には読み込んでいない。
+		     キャッシュバスティング: 手動での ?date=xxx 更新忘れによる
+		     古いCSSキャッシュ配信を防ぐため、designd_asset_url() で
+		     ファイル更新日時を自動的にクエリパラメータとして付与する。 -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap">
-		<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/css/app.min.css?date=20260904b">
+		<link rel="stylesheet" href="<?php echo designd_asset_url( '/assets/css/app.min.css' ); ?>">
 <?php wp_head(); ?>
 
 <?php

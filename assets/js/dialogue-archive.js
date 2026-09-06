@@ -1,51 +1,65 @@
-$(function(){
+document.addEventListener('DOMContentLoaded', function(){
 
-	var $container = $('.archives__container');
-	var $moreBtn   = $('.more_btn[data-paged]');
-	var $spinner   = $('.works-spinner');
-	var $overlay   = $('<div class="works-overlay"></div>').appendTo('body');
-	var isLoading  = false;
+	var container = document.querySelector('.archives__container');
+	var moreBtn   = document.querySelector('.more_btn[data-paged]');
+	var spinner   = document.querySelector('.works-spinner');
+	var overlay   = document.createElement('div');
+	overlay.className = 'works-overlay';
+	document.body.appendChild(overlay);
+	var isLoading = false;
 
 	function loadingStart() {
 		isLoading = true;
-		$spinner.show();
-		$overlay.addClass('is-active');
+		if (spinner) spinner.style.display = '';
+		overlay.classList.add('is-active');
 	}
 
 	function loadingEnd() {
 		isLoading = false;
-		$spinner.hide();
-		$overlay.removeClass('is-active');
+		if (spinner) spinner.style.display = 'none';
+		overlay.classList.remove('is-active');
 	}
 
 	function fetchDialogue(paged) {
 		if (isLoading) return;
 		loadingStart();
 
-		$.ajax({
-			url:  dialogueAjax.ajaxurl,
-			type: 'POST',
-			data: {
-				action: 'dialogue_filter',
-				paged:  paged,
-			},
-			success: function (res) {
-				$moreBtn.data('paged', paged);
-				res.has_more ? $moreBtn.removeClass('is-hidden-btn') : $moreBtn.addClass('is-hidden-btn');
-				$moreBtn.find('.next_load_count').text('(' + res.next_count + ')');
+		var params = new URLSearchParams();
+		params.append('action', 'dialogue_filter');
+		params.append('paged', paged);
+
+		fetch(dialogueAjax.ajaxurl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: params.toString()
+		})
+			.then(function (response) { return response.json(); })
+			.then(function (res) {
+				if (moreBtn) moreBtn.dataset.paged = paged;
+				if (moreBtn) {
+					if (res.has_more) moreBtn.classList.remove('is-hidden-btn');
+					else moreBtn.classList.add('is-hidden-btn');
+					var countEl = moreBtn.querySelector('.next_load_count');
+					if (countEl) countEl.textContent = '(' + res.next_count + ')';
+				}
 
 				applyAppend(res);
-			},
-			error: function () {
+			})
+			.catch(function () {
 				loadingEnd();
-			},
-		});
+			});
 
 		function applyAppend(res) {
-			var $items = $(res.html);
-			$items.find('img').removeAttr('loading');
-			$container.append($items);
-			waitForImages($container.find('.init')).then(function () {
+			var temp = document.createElement('div');
+			temp.innerHTML = res.html;
+			var items = Array.prototype.slice.call(temp.children);
+			items.forEach(function (item) {
+				item.querySelectorAll('img').forEach(function (img) {
+					img.removeAttribute('loading');
+				});
+				container.appendChild(item);
+			});
+			waitForImages(container.querySelectorAll('.init')).then(function () {
 				loadingEnd();
 				requestAnimationFrame(function () {
 					if (typeof scrollEventHandler === 'function') scrollEventHandler();
@@ -55,8 +69,8 @@ $(function(){
 		}
 	}
 
-	function waitForImages($el) {
-		var promises = $el.find('img').toArray().map(function (img) {
+	function waitForImages(imgList) {
+		var promises = Array.prototype.slice.call(imgList).map(function (img) {
 			var timeout = new Promise(function (resolve) { setTimeout(resolve, 5000); });
 			var loaded  = (img.complete && img.naturalWidth > 0)
 				? Promise.resolve()
@@ -72,9 +86,16 @@ $(function(){
 		return Promise.all(promises.length ? promises : [Promise.resolve()]);
 	}
 
-	$(document).on('click', '.more_btn[data-paged] a', function (e) {
+	// --------------------------------------------------
+	// More ボタンクリック
+	// --------------------------------------------------
+	document.addEventListener('click', function (e) {
+		var link = e.target.closest('.more_btn[data-paged] a');
+		if (!link) return;
 		e.preventDefault();
-		var paged = parseInt($moreBtn.data('paged')) + 1;
+
+		var paged = parseInt(moreBtn.dataset.paged || '1') + 1;
+
 		fetchDialogue(paged);
 	});
 
@@ -91,6 +112,6 @@ function cmnResizeHandler(){
 }
 
 function cmnScrollHandler(){
-	const scrpx = $(window).scrollTop();
+	const scrpx = window.pageYOffset || document.documentElement.scrollTop;
 	const innerH = window.innerHeight;
 }
