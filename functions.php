@@ -6,6 +6,38 @@
  */
 
 /* -----------------------------------------------
+ * アセットファイルの自動キャッシュバスティング
+ * -------------------------------------------- */
+// テーマ内のCSS/JSファイルURLに、ファイルの最終更新日時を
+// クエリパラメータ(?ver=xxxxxxxxxx)として自動付与するヘルパー関数。
+//
+// 【背景】静的アセット(assets/js/*.js 等)はサーバー側で
+// 「cache-control: max-age=604800」(7日間)というキャッシュ設定が
+// 付与されており、URLにバージョン情報が全く無い状態で配信されていた。
+// このため、サーバー上のファイル自体は最新に更新されていても、
+// 一度ブラウザにキャッシュされたユーザーには最大7日間、
+// 古いJS/CSSが配信され続けてしまい、「表示される場合とされない場合が
+// ある」「一度表示されたら以降は毎回表示される(≒新しいキャッシュが
+// 効いたユーザーはそのまま新しいまま)」という不具合の原因となっていた。
+//
+// $file: get_template_directory() からの相対パス (例: '/assets/js/top.js')
+// 戻り値: get_template_directory_uri() . $file . '?ver=' . filemtime
+//         (ファイルが存在しない場合はクエリなしのURLを返す)
+function designd_asset_url( $file ) {
+	$relative_path = ltrim( $file, '/' );
+	$abs_path       = get_template_directory() . '/' . $relative_path;
+	$uri            = get_template_directory_uri() . '/' . $relative_path;
+
+	if ( file_exists( $abs_path ) ) {
+		$ver = filemtime( $abs_path );
+		return esc_url( $uri . '?ver=' . $ver );
+	}
+
+	return esc_url( $uri );
+}
+
+
+/* -----------------------------------------------
  * title 要素の出力
  * -------------------------------------------- */
 function setup_theme() {

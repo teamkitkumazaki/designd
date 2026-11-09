@@ -8,6 +8,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="format-detection" content="telephone=no">
 
+<!-- ==========================================================
+     ⚠️ 【要対応】テスト環境用 noindex,nofollow ⚠️
+     本番環境(designd.jp)移行時は、下記の <meta name="robots"> タグを
+     必ず削除してください。削除を忘れると全ページが検索エンジンに
+     インデックスされなくなります。
+     対象: 全ページ共通(head.phpの先頭で出力しているため)
+     ========================================================== -->
+<meta name="robots" content="noindex,nofollow">
+<!-- ========================================================== -->
+
 <!-- METAS -->
 <?php
 if ( is_home() || is_front_page() ) {

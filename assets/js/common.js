@@ -12,7 +12,10 @@ window.addEventListener('pageshow', function (e) {
 
 
 // Cursor tip
-$(window).on('load', function () {
+// 変更点: window の load(画像/動画/フォント等の全リソース読込完了)を待たず、
+// DOMContentLoaded 相当のこのタイミングで実行する(ファーストビュー描画後に
+// カーソル演出・カバー解除・アコーディオン等の初期化を行うため)。
+$(function () {
 	const el = document.querySelector('.cursor_tip');
 	const tip = el ? el.querySelector('p.tip') : null;
 	const arrow = el ? el.querySelector('.hover_cursor') : null;
@@ -121,6 +124,34 @@ $(window).on('load', function () {
 $(function(){
 	ua.checkAgent();
 
+	// 動画の遅延読み込み(preload="none" + data-src で保留していた分の読込開始)。
+	// 背景: <video><source src="..."> をHTMLに直接書くと、ブラウザのプリロード
+	// スキャナがJS実行前・HTMLパース時点で動画バイトのダウンロードを開始してしまい、
+	// フェードイン表示に必要なjQuery/Lenis/animsition/common.js等のスクリプト
+	// ダウンロードと帯域を奪い合う。その結果、ページ読込全体は完了していても
+	// 「ファーストビューの表示自体が遅く感じる」体感速度の悪化につながっていた。
+	// 対策: 該当videoは preload="none" + <source data-src="..."> にHTML側を変更済み
+	// (プリロードスキャナに拾わせない)。ここで最優先(他の初期化処理より前)に
+	// data-src を実際の src へ設定し明示的に load() を呼ぶことで、フェードイン用
+	// スクリプトの読込を妨げずに、できるだけ早いタイミングで動画取得を開始する。
+	// poster 画像が設定されているため、動画取得中も見た目上の空白は発生しない。
+	document.querySelectorAll('.js-lazy-video').forEach(function (video) {
+		if (video.dataset.lazyLoaded) return;
+		video.dataset.lazyLoaded = '1';
+		video.querySelectorAll('source[data-src]').forEach(function (source) {
+			source.src = source.dataset.src;
+			delete source.dataset.src;
+		});
+		video.load();
+		// autoplay属性により通常は自動再生されるが、環境によっては明示的な
+		// play()呼び出しが必要な場合があるため保険として実行する
+		// (再生不可のPromise拒否はUXに影響しないため握りつぶす)。
+		var playPromise = video.play();
+		if (playPromise && typeof playPromise.catch === 'function') {
+			playPromise.catch(function () {});
+		}
+	});
+
 	//Lenis
 	//------------------------------------
 	lenis = new Lenis({
@@ -166,6 +197,13 @@ $(function(){
 
 	/* animsition
 	================================================*/
+	// 変更点: onLoadEvent を false にし、animsition内部の
+	// $(window).on('load', ...) による発火(画像/動画/フォント等の
+	// 全リソース読込完了を待つ)を無効化。代わりにこの$(function(){...})
+	// (DOMContentLoaded相当のタイミング=ファーストビュー描画後)で
+	// 明示的に .animsition('in') を呼び、フェードインを開始する。
+	// これにより「ページ全体を読み込まないとアニメーションが終わらない」
+	// 問題を解消しつつ、既存の見た目(fade-in/fade-out-up-sm等)は変更しない。
 	$(".animsition").animsition({
 		inClass : 'fade-in', // ロード時のエフェクト
 		outClass : 'fade-out-up-sm', // 離脱時のエフェクト
@@ -181,7 +219,8 @@ $(function(){
 						'-o-animation-duration'],
 		overlay : false, //オーバーレイの有効/無効
 		overlayClass : 'animsition-overlay-slide', //オーバーレイのクラス
-		overlayParentElement : 'body' //オーバーレイ要素のラッパー
+		overlayParentElement : 'body', //オーバーレイ要素のラッパー
+		onLoadEvent : false //window.loadでのin()自動発火を無効化(下で明示的に呼ぶ)
 	})
 		.one('animsition.inStart',function(){
 			//console.log('event -> inStart');
@@ -251,6 +290,24 @@ $(function(){
 		$(this).addClass('init');
 	});
 
+	// 修正: 「時間差フェードインが動いたり動かなくなったりする」不具合対策。
+	// 背景: 上の「.init 付与」の直後、同一の同期処理内で animsition('in') を
+	// 呼ぶと、inStart イベント経由で scrollEventHandler() が同期的に実行され、
+	// 画面内に入っている .anim-trigger/.anim-trigger-fade(および txt_split の
+	// h3 要素)から即座に .init が外される。ブラウザが一度も「.init が付いた
+	// 状態」を描画(スタイル計算)しないまま、付与→除去が同一ティック内で
+	// 連続すると、ブラウザ側で2つのスタイル変更が1回の計算にまとめられて
+	// しまい、CSSトランジション(opacity/transformのフェードイン)が発火せずに
+	// スキップされることがある。scrollEventHandler() 内には .fadein 要素の
+	// offset().top 読み取りなど、たまたま強制リフローが発生する処理も混在する
+	// ため、ページの要素構成やリソース読込タイミングによって「動く/動かない」が
+	// ランダムに変化していた。
+	// 対策: .init 付与の直後に document.body.offsetHeight を読み取り、強制的に
+	// レイアウト/スタイル計算を確定させることで、.init が付与された状態を
+	// ブラウザへ確実に一度認識させる。これにより、この後の .init 解除が
+	// 「新しいスタイル変更」として扱われ、トランジションが毎回確実に発火する。
+	void document.body.offsetHeight;
+
 	// Member リンク：aboutページなら animsition を無効化してスクロール
 	if ($('#aboutus__member').length) {
 		$('.navigation-abuout a').removeClass('animsition-link').on('click', function (e) {
@@ -258,6 +315,66 @@ $(function(){
 			if (lenis) lenis.scrollTo('#aboutus__member', { duration: 1.2 });
 		});
 	}
+
+	// フェードイン開始(window.loadを待たずここで実行)。
+	// 直前の「.anim-trigger/.anim-trigger-fade へ .init クラスを付与」する
+	// 処理より後にこれを呼ぶ必要がある。animsition('in') は inStart イベント経由で
+	// scrollEventHandler() を実行し、その中で「画面内に入っている .anim-trigger 要素の
+	// .init を外す」判定を行うため、.init 付与がまだ完了していない状態で
+	// scrollEventHandler() が走ると何も判定できず、結果としてユーザーが実際に
+	// スクロール/リサイズしない限りファーストビューの要素が表示されないままになる
+	// (「スクロールさせないとファーストビューの要素が表示されない」不具合の原因)。
+	// さらに上記の強制リフローに加え、requestAnimationFrame で1フレーム後に
+	// 実行することで、ブラウザの描画サイクルを跨がせ、トランジションの
+	// 発火をより確実にする(二重の安全策)。
+	requestAnimationFrame(function () {
+		$(".animsition").animsition('in');
+	});
+
+	// ウォッチドッグ: ファーストビュー表示の保険処理。
+	// 背景: 強制リフロー+rAFの対策を入れても、環境(回線速度/フォント読込/
+	// 動画メタデータ取得等)によっては、まれに一度も .init 解除処理
+	// (cmnOpenHandler経由のopening()、およびscrollEventHandler経由の
+	// .anim-trigger判定)が正しいタイミングで走らず、要素が.init付き
+	// (非表示)のまま固まってしまうケースが残り得る。
+	// 原因を1つに断定するより先に、「表示されないまま固まる」ことを
+	// 確実に防ぐため、cmnOpenHandler() / scrollEventHandler() を一定間隔で
+	// 繰り返し呼び出すウォッチドッグを設置する。
+	// 両関数とも「既に.initが外れている要素には何もしない」冪等な処理のため、
+	// 繰り返し呼んでも表示中の要素に悪影響はない(anim-triggerは画面内に
+	// 入っている場合のみinitを外す判定なので、画面外の要素を誤って
+	// 表示してしまうこともない)。
+	(function () {
+		var watchdogCount = 0;
+		var watchdogMax = 15; // 最大15回(約15秒間)繰り返す
+		var watchdogTimer = setInterval(function () {
+			watchdogCount++;
+			if (typeof cmnOpenHandler === 'function') cmnOpenHandler();
+			scrollEventHandler();
+
+			// フェイルセーフ: 「ブラウザで最初にトップページを開いた時だけ
+			// ファーストビューが表示されないまま」になる不具合対策。
+			// TOPページの初回アクセス時は openingFlg が true のままになる
+			// 期間があり、その間 cmnOpenHandler() 内の if(!openingFlg) ガードに
+			// より opening()(.init解除本体)の呼び出しがスキップされるため、
+			// 上のウォッチドッグ呼び出しだけでは救済できないケースがある。
+			// (本来は top.js 側の setTimeout 処理で openingFlg が false に
+			// 戻り opening() が呼ばれるが、何らかの理由でその処理が想定通りに
+			// 走らなかった場合の保険として、一定回数経過後は openingFlg の
+			// 状態に関わらず、残っている .init を強制的に解除する)
+			if (watchdogCount >= 8) {
+				document.querySelectorAll(
+					'.introduction__copy-jp.init, .introduction__bg.init'
+				).forEach(function (el) {
+					el.classList.remove('init');
+				});
+			}
+
+			if (watchdogCount >= watchdogMax) {
+				clearInterval(watchdogTimer);
+			}
+		}, 1000);
+	})();
 
 });
 
