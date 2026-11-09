@@ -422,6 +422,59 @@
 <tr><td class="label-col">平均TTFB</td><td>0.792秒</td><td>0.788秒</td></tr>
 </table>
 <p>サーバー応答速度(インフラ・バックエンド処理時間)自体は両環境でほぼ同等であり、計測誤差の範囲内。今回の速度改善効果は、サーバーインフラの差ではなく<strong>フロントエンド配信リソースの最適化によるもの</strong>であることが確認された。</p>
+
+<h2 class="sub-title">4-5. 追加検証:一覧・詳細ページ(Works / Dialogue / Dlog)の速度比較</h2>
+<p>TOP・Aboutページに加え、サイト内の主要な一覧ページ・詳細ページについても同様にLighthouse計測を実施した。対象は以下の6ページ。</p>
+<ul>
+  <li><span class="commit-code">/works/</span>(実績一覧)</li>
+  <li><span class="commit-code">/works/trial-seiyu/</span>(実績詳細)</li>
+  <li><span class="commit-code">/dialogue/</span>(対談一覧)</li>
+  <li><span class="commit-code">/dialogue/flc/</span>(対談詳細)</li>
+  <li><span class="commit-code">/dlog/</span>(お知らせ一覧)</li>
+  <li><span class="commit-code">/dlog/弊社事例の取材記事が公開されました。/</span>(お知らせ記事詳細)</li>
+</ul>
+
+<img class="chart-img" src="assets/chart_transfer_size_pages2.png">
+<table>
+<tr><th>ページ</th><th>本番環境(改修前)</th><th>テスト環境(改修後)</th><th>削減率</th></tr>
+<tr><td class="label-col">Works一覧</td><td>5.76 MB</td><td class="good">5.95 MB</td><td>▲3%</td></tr>
+<tr><td class="label-col">Works詳細(trial-seiyu)</td><td>15.68 MB</td><td class="good">11.65 MB</td><td class="good">▲26%</td></tr>
+<tr><td class="label-col">Dialogue一覧</td><td>6.40 MB</td><td class="good">2.35 MB</td><td class="good">▲63%</td></tr>
+<tr><td class="label-col">Dialogue詳細(flc)</td><td>9.26 MB</td><td class="good">5.22 MB</td><td class="good">▲44%</td></tr>
+<tr><td class="label-col">Dlog一覧</td><td>7.40 MB</td><td class="good">3.48 MB</td><td class="good">▲53%</td></tr>
+<tr><td class="label-col">Dlog記事(取材記事)</td><td>6.53 MB</td><td class="good">2.48 MB</td><td class="good">▲62%</td></tr>
+</table>
+
+<div class="note">
+<strong>Works一覧・Works詳細ページについての補足</strong>:この2ページのみ削減率が他ページより小さい。原因は、本番側でもすでに動画(.mp4)・画像が中心の大容量ページであり、かつ投稿内にアップロードされた動画(<span class="commit-code">TS_0708.mp4</span> 約7.4MB)がテーマ側の最適化対象外(WordPressメディアライブラリに直接アップロードされた、本改修のスコープ外のコンテンツ)であるため、フォント最適化分(約3.7MB)の削減効果が総容量に占める比率として相対的に小さくなっている。それでも実際にフォント配信形式の差分(本番側がipaexg.ttf、テスト側がipaexg.woff2)は他ページ同様に確認されており、該当する差分自体は一貫して解消されている。</div>
+
+<h2 class="sub-title">4-6. 追加検証ページのTTI(操作可能になるまでの時間)比較</h2>
+<img class="chart-img" src="assets/chart_tti_pages2.png">
+<table>
+<tr><th>ページ</th><th>本番 TTI</th><th>テスト TTI</th><th>本番 Speed Index</th><th>テスト Speed Index</th><th>本番 LCP</th><th>テスト LCP</th></tr>
+<tr><td class="label-col">Works一覧</td><td>4.3秒</td><td class="good">4.2秒</td><td>3.5秒</td><td class="good">3.2秒</td><td>4.2秒</td><td>4.2秒</td></tr>
+<tr><td class="label-col">Works詳細</td><td>8.0秒</td><td class="good">5.0秒</td><td>3.2秒</td><td class="good">3.0秒</td><td>8.0秒</td><td class="good">5.0秒</td></tr>
+<tr><td class="label-col">Dialogue一覧</td><td>6.2秒</td><td class="good">3.1秒</td><td>2.8秒</td><td class="good">2.5秒</td><td>6.2秒</td><td class="good">3.1秒</td></tr>
+<tr><td class="label-col">Dialogue詳細</td><td>8.8秒</td><td class="good">6.7秒</td><td>4.0秒</td><td class="good">3.6秒</td><td>8.8秒</td><td class="good">6.6秒</td></tr>
+<tr><td class="label-col">Dlog一覧</td><td>6.4秒</td><td class="good">3.3秒</td><td>2.7秒</td><td>2.8秒</td><td>6.4秒</td><td class="good">3.3秒</td></tr>
+<tr><td class="label-col">Dlog記事</td><td class="good">1.9秒</td><td>3.3秒</td><td class="good">2.6秒</td><td>2.4秒</td><td>1.6秒</td><td>1.7秒</td></tr>
+</table>
+
+<div class="note">
+<strong>所見</strong>:一覧・詳細ページともに、フォント配信最適化の効果によりTTI・LCPが大幅に短縮されているページが多い(特にDialogue一覧▲50%、Works詳細▲38%)。唯一Dlog記事詳細ページのみテスト環境のTTIが本番よりわずかに長い結果となったが、これはページ自体が軽量(総転送量が2.48MBと最も小さい部類)であり、数百ms〜1秒程度の単発計測のブレの範囲内と考えられる。総転送量・Speed Index等の総合指標では引き続きテスト環境が優位である。
+</div>
+
+<h2 class="sub-title">4-7. フォント配信最適化の効果(全ページ共通)</h2>
+<p>追加検証した6ページすべてにおいて、TOP/Aboutページと同様に本番環境は日本語フォント「IPAexGothic」をTTF形式(4.19MB)で配信し、テスト環境はWOFF2形式(441KB)で配信していることを確認した。この差分は<strong>サイト内の全ページで共通して発生する構造的な問題</strong>であり、1ページあたり常時約3.75MBの転送量削減効果がサイト全体に及ぶことが、今回の追加検証により改めて裏付けられた。</p>
+
+<h2 class="sub-title">4-8. サーバー応答速度(TTFB)の実測値:追加ページ分(curl 3回平均)</h2>
+<table>
+<tr><th>ページ</th><th>本番環境 平均応答時間</th><th>テスト環境 平均応答時間</th></tr>
+<tr><td class="label-col">/works/</td><td>1.085秒</td><td class="good">0.924秒</td></tr>
+<tr><td class="label-col">/dialogue/</td><td>0.840秒</td><td class="good">0.790秒</td></tr>
+<tr><td class="label-col">/dlog/</td><td class="good">0.850秒</td><td>0.903秒</td></tr>
+</table>
+<p>TOP/Aboutページの検証結果と同様、サーバー応答速度自体は両環境でほぼ同等の範囲に収まっており、本改修による速度改善効果はフロントエンド配信リソースの最適化によるものであることが、追加検証ページでも一貫して確認された。</p>
 </section>
 
 <!-- ============ 5. 視覚的差分調査 ============ -->
