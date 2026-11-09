@@ -23,6 +23,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (openingFlg) {
 		// 外部サイトからの初回アクセス: スプラッシュ画面を表示してからopening()を実行
 		//
+		// 修正: トップページ初回アクセス時に表示されるはずの「DESIGND:」ロゴの
+		// ローディング(スプラッシュ)アニメーションが表示されなくなっていた不具合対策。
+		// 原因: jQuery撤去リファクタリング時に $(elm).show() を
+		// elm.style.display = '' に置き換えていたが、両者の挙動は異なる。
+		// jQueryの.show()は要素のデフォルト表示値(block等)をインライン
+		// スタイルとして明示的に設定しCSS側のdisplay:noneを上書きするのに
+		// 対し、style.display = '' は単に「インラインスタイル指定を削除する」
+		// だけの処理のため、CSS側の .opening{display:none} へフォールバック
+		// してしまい、結果的に要素が一切表示されないままになっていた。
+		// 対策: style.display = '' ではなく明示的に 'block' を設定する。
+		//
 		// 修正: 「ブラウザで最初にトップページを開いた時だけファーストビューが
 		// 表示されないままになる」不具合対策。
 		// 従来はsetTimeoutを入れ子(ネスト)にしていたため、外側のコールバック内で
@@ -40,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		try {
 			document.body.classList.add('is-fix');
 		} catch (e) {}
-		if (elm) elm.style.display = '';
+		if (elm) elm.style.display = 'block';
 
 		setTimeout(function() {
 			try {
